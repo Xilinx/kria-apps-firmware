@@ -1,0 +1,30 @@
+model {
+  name: "yolov2_voc_compress26G"
+  kernel {
+     name: "yolov2_voc_compress26G"
+     mean: 0.0
+     mean: 0.0
+     mean: 0.0
+     scale: 0.00390625
+     scale: 0.00390625
+     scale: 0.00390625
+  }
+  model_type : YOLOv3
+  yolo_v3_param {
+    num_classes: 20
+    anchorCnt: 5
+    conf_threshold: 0.3
+    nms_threshold: 0.45
+    biases: 1.3221
+    biases: 1.73145
+    biases: 3.19275
+    biases: 4.00944
+    biases: 5.05587
+    biases: 8.09892
+    biases: 9.47112
+    biases: 4.84053
+    biases: 11.2364
+    biases: 10.0071
+    test_mAP: false
+  }
+}

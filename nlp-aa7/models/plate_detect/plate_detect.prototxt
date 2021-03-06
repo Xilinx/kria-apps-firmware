@@ -1,0 +1,13 @@
+model {
+   name : "dense_plate"
+   kernel {
+     name: "dense_plate"
+     mean: 128.0
+     mean: 128.0
+     mean: 128.0
+     scale: 1.0
+     scale: 1.0
+     scale: 1.0
+   }
+}
+
