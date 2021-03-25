@@ -35,33 +35,6 @@
 				clocks = <&zynqmp_clk 71>;
 				compatible = "xlnx,fclk";
 			};
-
-			clocking1: clocking1 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <99999001>;
-				assigned-clocks = <&zynqmp_clk 72>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 72>;
-				compatible = "xlnx,fclk";
-			};
-
-			clocking2: clocking2 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <299997009>;
-				assigned-clocks = <&zynqmp_clk 73>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 73>;
-				compatible = "xlnx,fclk";
-			};
-
-			clocking3: clocking3 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <374996246>;
-				assigned-clocks = <&zynqmp_clk 74>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 74>;
-				compatible = "xlnx,fclk";
-			};
 		};
 	};
 
@@ -112,86 +85,92 @@
 		};
 	};
 
+	/* fpga clocks */
 	fragment@7 {
 		target = <&amba>;
 		overlay7: __overlay__ {
-			#address-cells = <2>;
-			#size-cells = <2>;
-
 			misc_clk_0: misc_clk_0 {
-				#clock-cells = <0x0>;
-				clock-frequency = <99999000>;
+				#clock-cells = <0>;
+				clock-frequency = <274997250>;
+				compatible = "fixed-clock";
+			};
+
+			misc_clk_1: misc_clk_1 {
+				#clock-cells = <0>;
+				clock-frequency = <549994500>;
 				compatible = "fixed-clock";
 			};
 
 			misc_clk_2: misc_clk_2 {
 				#clock-cells = <0>;
-				clock-frequency = <299997000>;
+				clock-frequency = <99999000>;
 				compatible = "fixed-clock";
 			};
 
-			misc_clk_5: misc_clk_5 {
-				#clock-cells = <0x0>;
+			misc_clk_3: misc_clk_3 {
+				#clock-cells = <0>;
 				clock-frequency = <49999500>;
 				compatible = "fixed-clock";
 			};
+		};
+	};
 
+	/* vcu decode */
+	fragment@8 {
+		target = <&amba>;
+		overlay8: __overlay__ {
 			vcu: vcu@80100000 {
-				#address-cells = <0x2>;
-				#clock-cells = <0x1>;
-				#size-cells = <0x2>;
+				#address-cells = <2>;
+				#clock-cells = <1>;
+				#size-cells = <2>;
 				clock-names = "pll_ref", "aclk", "vcu_core_enc", "vcu_core_dec", "vcu_mcu_enc", "vcu_mcu_dec";
-				clocks = <&misc_clk_5>, <&misc_clk_0>, <&vcu 1>, <&vcu 2>, <&vcu 3>, <&vcu 4>;
+				clocks = <&misc_clk_3>, <&misc_clk_2>, <&vcu 1>, <&vcu 2>, <&vcu 3>, <&vcu 4>;
 				compatible = "xlnx,vcu-1.2", "xlnx,vcu";
 				interrupt-names = "vcu_host_interrupt";
 				interrupt-parent = <&gic>;
-				interrupts = <0x0 106 0x4>;
+				interrupts = <0 106 4>;
 				ranges;
-				reg = <0x0 0x80140000 0x0 0x1000 0x0 0x80141000 0x0 0x1000>;
+				reg = <0x0 0x80140000 0x0 0x1000>, <0x0 0x80141000 0x0 0x1000>;
 				reg-names = "vcu_slcr", "logicore";
 				reset-gpios = <&gpio 79 0>;
 
 				al5d: al5d@80120000 {
 					compatible = "al,al5d-1.2", "al,al5d";
 					interrupt-parent = <&gic>;
-					interrupts = <0x0 106 0x4>;
+					interrupts = <0 106 4>;
 					reg = <0x0 0x80120000 0x0 0x10000>;
 				};
 			};
+		};
+	};
 
-			zocl: zyxclmm_drm {
-				compatible = "xlnx,zocl";
-				status = "okay";
-				interrupt-parent = <&gic>;
-				interrupts = <0 89  4>, <0 90  4>, <0 91  4>, <0 92  4>,
-					     <0 93  4>, <0 94  4>, <0 95  4>, <0 96  4>;
-			};
-// dp video clk
+	/* video mixer display pipeline */
+	fragment@9 {
+		target = <&amba>;
+		overlay9: __overlay__ {
 			dp_video_clk: clock-generator@80020000 {
 				#address-cells = <2>;
 				#clock-cells = <1>;
-				reg = <0x0 0x80020000 0x0 0x10000>;
-				compatible = "xlnx,clocking-wizard";
-				speed-grade = <3>;
 				clock-names = "clk_in1", "s_axi_aclk";
-				clocks = <&misc_clk_2 &misc_clk_0>;
 				clock-output-names = "clk_out1";
+				clocks = <&misc_clk_0>, <&misc_clk_2>;
+				compatible = "xlnx,clocking-wizard";
+				reg = <0x0 0x80020000 0x0 0x10000>;
+				speed-grade = <2>;
 			};
 
-// video timing controller
 			v_tc: v_tc@80010000 {
 				clock-names = "clk", "s_axi_aclk";
-				clocks = <&dp_video_clk 0 &misc_clk_0>;
+				clocks = <&dp_video_clk 0>, <&misc_clk_2>;
 				compatible = "xlnx,bridge-v-tc-6.1";
 				reg = <0x0 0x80010000 0x0 0x10000>;
 				xlnx,generator;
 				xlnx,pixels-per-clock = <1>;
 			};
 
-// mixer
 			v_mix: v_mix@80000000 {
-				clocks = <&misc_clk_2>;
-				compatible = "xlnx,v-mix-5.0", "xlnx,mixer-3.0", "xlnx,mixer-4.0", "xlnx,mixer-5.0";
+				clocks = <&misc_clk_0>;
+				compatible = "xlnx,v-mix-5.1", "xlnx,mixer-3.0", "xlnx,mixer-4.0", "xlnx,mixer-5.0";
 				interrupt-names = "interrupt";
 				interrupt-parent = <&gic>;
 				interrupts = <0 104 4>;
@@ -249,6 +228,20 @@
 					xlnx,layer-max-width = <3840>;
 					xlnx,vformat = "AR24";
 				};
+			};
+		};
+	};
+
+	/* zocl */
+	fragment@10 {
+		target = <&amba>;
+		overlay10: __overlay__ {
+			zocl: zyxclmm_drm {
+				compatible = "xlnx,zocl";
+				status = "okay";
+				interrupt-parent = <&gic>;
+				interrupts = <0 89  4>, <0 90  4>, <0 91  4>, <0 92  4>,
+					     <0 93  4>, <0 94  4>, <0 95  4>, <0 96  4>;
 			};
 		};
 	};
