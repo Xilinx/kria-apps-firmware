@@ -35,33 +35,6 @@
 				clocks = <&zynqmp_clk 71>;
 				compatible = "xlnx,fclk";
 			};
-
-			clocking1: clocking1 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <99999001>;
-				assigned-clocks = <&zynqmp_clk 72>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 72>;
-				compatible = "xlnx,fclk";
-			};
-
-			clocking2: clocking2 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <299997009>;
-				assigned-clocks = <&zynqmp_clk 73>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 73>;
-				compatible = "xlnx,fclk";
-			};
-
-			clocking3: clocking3 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <374996246>;
-				assigned-clocks = <&zynqmp_clk 74>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 74>;
-				compatible = "xlnx,fclk";
-			};
 		};
 	};
 
@@ -84,6 +57,34 @@
 		};
 	};
 
+	fragment@3 {
+		target = <&zynqmp_dp_snd_pcm0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@4 {
+		target = <&zynqmp_dp_snd_pcm1>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@5 {
+		target = <&zynqmp_dp_snd_card0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@6 {
+		target = <&zynqmp_dp_snd_codec0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
 	fragment@7 {
 		target = <&amba>;
 		overlay7: __overlay__ {
@@ -91,29 +92,29 @@
 			#size-cells = <2>;
 
 			misc_clk_0: misc_clk_0 {
-				#clock-cells = <0x0>;
+				#clock-cells = <0>;
 				clock-frequency = <99999000>;
 				compatible = "fixed-clock";
 			};
 
 			misc_clk_1: misc_clk_1 {
-				#clock-cells = <0x0>;
-				clock-frequency = <199998000>;
-				compatible = "fixed-clock";
-			};
-
-			misc_clk_2: misc_clk_2 {
 				#clock-cells = <0>;
 				clock-frequency = <299997000>;
 				compatible = "fixed-clock";
 			};
 
-			misc_clk_5: misc_clk_5 {
-				#clock-cells = <0x0>;
-				clock-frequency = <49999500>;
+			misc_clk_2: misc_clk_2 {
+				#clock-cells = <0>;
+				clock-frequency = <199998000>;
 				compatible = "fixed-clock";
 			};
+		};
+	};
 
+	/* ar0144 isp mipi rx pipeline */
+	fragment@8 {
+		target = <&amba>;
+		overlay8: __overlay__ {
 			ap1302_clk: sensor_clk {
 				#clock-cells = <0x0>;
 				compatible = "fixed-clock";
@@ -201,7 +202,7 @@
 				compatible = "xlnx,mipi-csi2-rx-subsystem-5.0";
 				reg = <0x0 0x80030000 0x0 0x10000>;
 				clock-names = "lite_aclk", "dphy_clk_200M", "video_aclk";
-				clocks = <&misc_clk_0>, <&misc_clk_1>, <&misc_clk_2>;
+				clocks = <&misc_clk_0>, <&misc_clk_2>, <&misc_clk_1>;
 				interrupt-parent = <&gic>;
 				interrupts = <0 107 4>;
 				xlnx,csi-pxl-format = "YUV422_8bit";
@@ -265,9 +266,9 @@
 				};
 			};
 
-			isp_fb_wr_csi: fb_wr@B0000000 {
+			isp_fb_wr_csi: fb_wr@b0000000 {
 				compatible = "xlnx,axi-frmbuf-wr-v2.1";
-				reg = <0x0 0xB0000000 0x0 0x10000>;
+				reg = <0x0 0xb0000000 0x0 0x10000>;
 				#dma-cells = <1>;
 				interrupt-parent = <&gic>;
 				interrupts = <0 108 4>;
@@ -277,7 +278,7 @@
 				xlnx,pixels-per-clock = <2>;
 				xlnx,max-width = <3840>;
 				xlnx,max-height = <2160>;
-				clocks = <&misc_clk_2>;
+				clocks = <&misc_clk_1>;
 				clock-names = "ap_clk";
 			};
 
@@ -300,50 +301,46 @@
 					};
 				};
 			};
+		};
+	};
 
-			zocl: zyxclmm_drm {
-				compatible = "xlnx,zocl";
-				status = "okay";
-				interrupt-parent = <&gic>;
-				interrupts = <0 89  4>, <0 90  4>, <0 91  4>, <0 92  4>,
-						<0 93  4>, <0 94  4>, <0 95  4>, <0 96  4>;
-			};
-
-			// dp video clk
+	/* video mixer display pipeline */
+	fragment@9 {
+		target = <&amba>;
+		overlay9: __overlay__ {
 			dp_video_clk: clock-generator@80020000 {
 				#address-cells = <2>;
 				#clock-cells = <1>;
-				reg = <0x0 0x80020000 0x0 0x10000>;
-				compatible = "xlnx,clocking-wizard";
-				speed-grade = <3>;
 				clock-names = "clk_in1", "s_axi_aclk";
-				clocks = <&misc_clk_2 &misc_clk_0>;
 				clock-output-names = "clk_out1";
+				clocks = <&misc_clk_1>, <&misc_clk_0>;
+				compatible = "xlnx,clocking-wizard";
+				reg = <0x0 0x80020000 0x0 0x10000>;
+				speed-grade = <2>;
 			};
 
-			// video timing controller
 			v_tc: v_tc@80010000 {
 				clock-names = "clk", "s_axi_aclk";
-				clocks = <&dp_video_clk 0 &misc_clk_0>;
+				clocks = <&dp_video_clk 0>, <&misc_clk_0>;
 				compatible = "xlnx,bridge-v-tc-6.1";
 				reg = <0x0 0x80010000 0x0 0x10000>;
 				xlnx,generator;
 				xlnx,pixels-per-clock = <1>;
 			};
 
-			v_mix: v_mix@B0010000 {
-				clocks = <&misc_clk_2>;
-				compatible = "xlnx,v-mix-5.0", "xlnx,mixer-3.0", "xlnx,mixer-4.0", "xlnx,mixer-5.0";
+			v_mix: v_mix@b0010000 {
+				clocks = <&misc_clk_1>;
+				compatible = "xlnx,v-mix-5.1", "xlnx,mixer-3.0", "xlnx,mixer-4.0", "xlnx,mixer-5.0";
 				interrupt-names = "interrupt";
 				interrupt-parent = <&gic>;
 				interrupts = <0 104 4>;
-				reg = <0x0 0xB0010000 0x0 0x10000>;
+				reg = <0x0 0xb0010000 0x0 0x10000>;
+				reset-gpios = <&gpio 78 1>;
 				xlnx,bpc = <8>;
 				xlnx,dma-addr-width = <32>;
 				xlnx,num-layers = <6>;
 				xlnx,ppc = <1>;
 				xlnx,disp-bridge = <&vid_layer>;
-				reset-gpios = <&gpio 78 1>;
 
 				mixer_port: port {
 					reg = <0>;
@@ -387,18 +384,24 @@
 				};
 
 				xx_mix_overlay_5display_pipeline_v_mix_0: layer_5 {
-					xlnx,layer-alpha ;
 					xlnx,layer-id = <5>;
-					xlnx,layer-max-width = <1920>;
+					xlnx,layer-max-width = <3840>;
 					xlnx,vformat = "AR24";
 				};
+			};
+		};
+	};
 
-				xx_mix_logodisplay_pipeline_v_mix_0: logo {
-					xlnx,layer-id = <6>;
-					xlnx,logo-height = <64>;
-					xlnx,logo-width = <64>;
-				};
-
+	/* zocl */
+	fragment@10 {
+		target = <&amba>;
+		overlay10: __overlay__ {
+			zocl: zyxclmm_drm {
+				compatible = "xlnx,zocl";
+				status = "okay";
+				interrupt-parent = <&gic>;
+				interrupts = <0 89  4>, <0 90  4>, <0 91  4>, <0 92  4>,
+						<0 93  4>, <0 94  4>, <0 95  4>, <0 96  4>;
 			};
 		};
 	};

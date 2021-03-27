@@ -24,7 +24,7 @@
 		overlay1: __overlay__ {
 			afi0: afi0 {
 				compatible = "xlnx,afi-fpga";
-				config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 2>, <11 2>, <12 2>, <13 2>, <14 0x000>, <15 0x000>;
+				config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>, <12 0>, <13 0>, <14 0x0>, <15 0x000>;
 			};
 
 			clocking0: clocking0 {
@@ -38,28 +38,10 @@
 
 			clocking1: clocking1 {
 				#clock-cells = <0>;
-				assigned-clock-rates = <99999001>;
+				assigned-clock-rates = <96968727>;
 				assigned-clocks = <&zynqmp_clk 72>;
 				clock-output-names = "fabric_clk";
 				clocks = <&zynqmp_clk 72>;
-				compatible = "xlnx,fclk";
-			};
-
-			clocking2: clocking2 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <299997009>;
-				assigned-clocks = <&zynqmp_clk 73>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 73>;
-				compatible = "xlnx,fclk";
-			};
-
-			clocking3: clocking3 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <374996246>;
-				assigned-clocks = <&zynqmp_clk 74>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 74>;
 				compatible = "xlnx,fclk";
 			};
 		};
@@ -100,12 +82,10 @@
 		};
 	};
 
+	/* fpga clocks */
 	fragment@7 {
 		target = <&amba>;
 		overlay7: __overlay__ {
-			#address-cells = <2>;
-			#size-cells = <2>;
-
 			misc_clk_0: misc_clk_0 {
 				#clock-cells = <0x0>;
 				clock-frequency = <99999000>;
@@ -135,7 +115,13 @@
 				clock-frequency = <18432019>;
 				compatible = "fixed-clock";
 			};
+		};
+	};
 
+	/* ar1335 isp mipi rx pipeline */
+	fragment@8 {
+		target = <&amba>;
+		overlay8: __overlay__ {
 			ap1302_clk: sensor_clk {
 				#clock-cells = <0x0>;
 				compatible = "fixed-clock";
@@ -163,8 +149,6 @@
 				regulator-min-microvolt = <1200000>;
 				regulator-max-microvolt = <1200000>;
 			};
-
-
 
 			axi_iic: i2c@80030000 {
 				#address-cells = <1>;
@@ -296,7 +280,13 @@
 					};
 				};
 			};
+		};
+	};
 
+	/* i2s rx/tx audio pipeline */
+	fragment@9 {
+		target = <&amba>;
+		overlay9: __overlay__ {
 			i2s_audio_formatter: audio_formatter@80040000 {
 				clock-names = "s_axi_lite_aclk", "m_axis_mm2s_aclk", "aud_mclk", "s_axis_s2mm_aclk";
 				clocks = <&misc_clk_0>, <&misc_clk_6>, <&misc_clk_6>, <&misc_clk_0>;
@@ -322,7 +312,6 @@
 			};
 
 			audio_rx: i2s_receiver@80060000 {
-				aud_mclk = <0x1194013>;
 				clock-names = "s_axi_ctrl_aclk", "aud_mclk", "m_axis_aud_aclk";
 				clocks = <&misc_clk_0>, <&misc_clk_6>, <&misc_clk_0>;
 				compatible = "xlnx,i2s-receiver-1.0", "xlnx,i2s-receiver-1.0";
@@ -337,7 +326,6 @@
 			};
 
 			audio_tx: i2s_transmitter@80070000 {
-				aud_mclk = <0x1194013>;
 				clock-names = "s_axi_ctrl_aclk", "aud_mclk", "s_axis_aud_aclk";
 				clocks = <&misc_clk_0>, <&misc_clk_6>, <&misc_clk_0>;
 				compatible = "xlnx,i2s-transmitter-1.0", "xlnx,i2s-transmitter-1.0";
@@ -350,37 +338,49 @@
 				xlnx,num-channels = <0x1>;
 				xlnx,snd-pcm = <&i2s_audio_formatter>;
 			};
+		};
+	};
 
+	/* vcu encode/decode */
+	fragment@10 {
+		target = <&amba>;
+		overlay10: __overlay__ {
 			vcu: vcu@80100000 {
-				#address-cells = <0x2>;
-				#clock-cells = <0x1>;
-				#size-cells = <0x2>;
+				#address-cells = <2>;
+				#clock-cells = <1>;
+				#size-cells = <2>;
 				clock-names = "pll_ref", "aclk", "vcu_core_enc", "vcu_core_dec", "vcu_mcu_enc", "vcu_mcu_dec";
 				clocks = <&misc_clk_5>, <&misc_clk_0>, <&vcu 1>, <&vcu 2>, <&vcu 3>, <&vcu 4>;
 				compatible = "xlnx,vcu-1.2", "xlnx,vcu";
 				interrupt-names = "vcu_host_interrupt";
 				interrupt-parent = <&gic>;
-				interrupts = <0x0 106 0x4>;
+				interrupts = <0 106 4>;
 				ranges;
-				reg = <0x0 0x80140000 0x0 0x1000 0x0 0x80141000 0x0 0x1000>;
+				reg = <0x0 0x80140000 0x0 0x1000>, <0x0 0x80141000 0x0 0x1000>;
 				reg-names = "vcu_slcr", "logicore";
 				reset-gpios = <&gpio 80 0>;
 
 				al5e: al5e@80100000 {
 					compatible = "al,al5e-1.2", "al,al5e";
 					interrupt-parent = <&gic>;
-					interrupts = <0x0 106 0x4>;
+					interrupts = <0 106 4>;
 					reg = <0x0 0x80100000 0x0 0x10000>;
 				};
 
 				al5d: al5d@80120000 {
 					compatible = "al,al5d-1.2", "al,al5d";
 					interrupt-parent = <&gic>;
-					interrupts = <0x0 106 0x4>;
+					interrupts = <0 106 4>;
 					reg = <0x0 0x80120000 0x0 0x10000>;
 				};
 			};
+		};
+	};
 
+	/* zocl */
+	fragment@11 {
+		target = <&amba>;
+		overlay11: __overlay__ {
 			zocl: zyxclmm_drm {
 				compatible = "xlnx,zocl";
 				status = "okay";
