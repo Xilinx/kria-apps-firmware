@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 /*
- * dts file for Xilinx KV260 Smartcamera AA1
+ * dts file for Xilinx KV260 smartcam
  *
  * (C) Copyright 2020 - 2021, Xilinx, Inc.
  *
@@ -14,7 +14,7 @@
 		overlay0: __overlay__ {
 			#address-cells = <2>;
 			#size-cells = <2>;
-			firmware-name = "smartcamera-aa1.bit.bin";
+			firmware-name = "kv260-smartcam.bit.bin";
 			resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>, <&zynqmp_reset 118>, <&zynqmp_reset 119>;
 		};
 	};
@@ -38,7 +38,7 @@
 
 			clocking1: clocking1 {
 				#clock-cells = <0>;
-				assigned-clock-rates = <96968727>;
+				assigned-clock-rates = <99999001>;
 				assigned-clocks = <&zynqmp_clk 72>;
 				clock-output-names = "fabric_clk";
 				clocks = <&zynqmp_clk 72>;

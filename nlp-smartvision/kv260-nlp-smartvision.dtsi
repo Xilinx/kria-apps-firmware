@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 /*
- * dts file for Xilinx KV260 NLP AA7
+ * dts file for Xilinx KV260 nlp-smartvision
  *
  * (C) Copyright 2020 - 2021, Xilinx, Inc.
  *
@@ -14,7 +14,7 @@
 		overlay0: __overlay__ {
 			#address-cells = <2>;
 			#size-cells = <2>;
-			firmware-name = "som-kws.bit.bin";
+			firmware-name = "kv260-nlp-smartvision.bit.bin";
 			resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>, <&zynqmp_reset 118>, <&zynqmp_reset 119>;
 		};
 	};
@@ -163,7 +163,7 @@
 				regulator-min-microvolt = <1200000>;
 				regulator-max-microvolt = <1200000>;
 			};
-			
+
 			axi_iic: i2c@80030000 {
 				#address-cells = <1>;
 				#size-cells = <0>;
