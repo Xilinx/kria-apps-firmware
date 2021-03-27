@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 /*
- * dts file for Xilinx KV260 Defect Detection AA4
+ * dts file for Xilinx KV260 defect-detect
  *
  * (C) Copyright 2020 - 2021, Xilinx, Inc.
  *
@@ -14,7 +14,7 @@
 		overlay0: __overlay__ {
 			#address-cells = <2>;
 			#size-cells = <2>;
-			firmware-name = "kv260-defect-detection-aa4.bit.bin";
+			firmware-name = "kv260-defect-detect.bit.bin";
 			resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>, <&zynqmp_reset 118>, <&zynqmp_reset 119>;
 		};
 	};

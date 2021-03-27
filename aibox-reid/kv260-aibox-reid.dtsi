@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 /*
- * dts file for Xilinx KV260 Aibox AA2
+ * dts file for Xilinx KV260 aibox-reid
  *
  * (C) Copyright 2020 - 2021, Xilinx, Inc.
  *
@@ -14,7 +14,7 @@
 		overlay0: __overlay__ {
 			#address-cells = <2>;
 			#size-cells = <2>;
-			firmware-name = "aibox-aa2.bit.bin";
+			firmware-name = "kv260-aibox-reid.bit.bin";
 			resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>, <&zynqmp_reset 118>, <&zynqmp_reset 119>;
 		};
 	};
