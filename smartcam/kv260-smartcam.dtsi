@@ -38,7 +38,7 @@
 
 			clocking1: clocking1 {
 				#clock-cells = <0>;
-				assigned-clock-rates = <96968727>;
+				assigned-clock-rates = <99999001>;
 				assigned-clocks = <&zynqmp_clk 72>;
 				clock-output-names = "fabric_clk";
 				clocks = <&zynqmp_clk 72>;
