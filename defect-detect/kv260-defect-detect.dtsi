@@ -100,7 +100,7 @@
 
 			misc_clk_1: misc_clk_1 {
 				#clock-cells = <0>;
-				clock-frequency = <299997000>;
+				clock-frequency = <274997250>;
 				compatible = "fixed-clock";
 			};
 
