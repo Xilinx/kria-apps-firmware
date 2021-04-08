@@ -17,6 +17,16 @@
 		     "xlnx,zynqmp-sk-kv260-revZ",
 		     "xlnx,zynqmp-sk-kv260", "xlnx,zynqmp";
 
+	fragment@0 {
+		target = <&fpga_full>;
+		overlay0: __overlay__ {
+			#address-cells = <2>;
+			#size-cells = <2>;
+			firmware-name = "kv260-dp.bit.bin";
+			fpga-config-from-dmabuf;
+		};
+	};
+
 	fragment4 {
 		target = <&zynqmp_dpsub>;
 		__overlay__ {
