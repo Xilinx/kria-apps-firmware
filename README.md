@@ -2,10 +2,14 @@
 
 This repository contains PL firmware files for the Kria KV260 AI Starter Kit.
 
-Supported Accelerated Application (AA) firmware:
-1. Smartcamera AA1
-2. Aibox AA2
-3. NLP AA7
+Supported accelerated application firmware:
+1. smartcam
+2. aibox-reid
+3. defect-detect
+4. nlp-smartvision
+
+**Note:** The dp firmware enables the PS DP device nodes only and is loaded by
+default during boot-up.
 
 Each set of firmware files consists of:
 1. PL bitstream binary
