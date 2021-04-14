@@ -360,6 +360,7 @@
 				reg = <0x0 0x80140000 0x0 0x1000>, <0x0 0x80141000 0x0 0x1000>;
 				reg-names = "vcu_slcr", "logicore";
 				reset-gpios = <&gpio 80 0>;
+				xlnx,skip-isolation;
 
 				al5e: al5e@80100000 {
 					compatible = "al,al5e-1.2", "al,al5e";
