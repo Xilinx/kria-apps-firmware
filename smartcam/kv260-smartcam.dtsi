@@ -212,7 +212,7 @@
 				clocks = <&misc_clk_0>, <&misc_clk_1>, <&misc_clk_2>;
 				interrupt-parent = <&gic>;
 				interrupts = <0 104 4>;
-				xlnx,csi-pxl-format = "YUV420_8bit";
+				xlnx,csi-pxl-format = <0x18>;
 				xlnx,axis-tdata-width = <32>;
 				xlnx,max-lanes = <4>;
 				xlnx,en-active-lanes;
@@ -224,8 +224,8 @@
 					#address-cells = <0x1>;
 					#size-cells = <0x0>;
 
-					port@0 {
-						reg = <0x0>;
+					port@1 {
+						reg = <0x1>;
 						xlnx,video-format = <0x3>;
 						xlnx,video-width = <0x8>;
 
@@ -233,8 +233,8 @@
 							remote-endpoint = <&isp_vcap_csi_in>;
 						};
 					};
-					port@1 {
-						reg = <0x1>;
+					port@0 {
+						reg = <0x0>;
 						xlnx,video-format = <0x3>;
 						xlnx,video-width = <0x8>;
 
