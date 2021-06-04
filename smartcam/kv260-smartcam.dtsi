@@ -15,7 +15,6 @@
 			#address-cells = <2>;
 			#size-cells = <2>;
 			firmware-name = "kv260-smartcam.bit.bin";
-			fpga-config-from-dmabuf; 
 			resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>, <&zynqmp_reset 118>, <&zynqmp_reset 119>;
 		};
 	};

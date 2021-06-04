@@ -23,7 +23,6 @@
 			#address-cells = <2>;
 			#size-cells = <2>;
 			firmware-name = "kv260-dp.bit.bin";
-			fpga-config-from-dmabuf;
 		};
 	};
 
