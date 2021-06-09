@@ -24,7 +24,7 @@
 		overlay1: __overlay__ {
 			afi0: afi0 {
 				compatible = "xlnx,afi-fpga";
-				config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 1>, <5 1>, <6 0>, <7 0>, <8 0>, <9 0>, <10 2>, <11 2>, <12 2>, <13 2>, <14 0x800>, <15 0x000>;
+				config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 1>, <5 1>, <6 0>, <7 0>, <8 0>, <9 0>, <10 2>, <11 2>, <12 2>, <13 2>, <14 0x000>, <15 0x000>;
 			};
 
 			clocking0: clocking0 {
@@ -149,14 +149,14 @@
 	fragment@9 {
 		target = <&amba>;
 		overlay9: __overlay__ {
-			dp_video_clk: clock-generator@80020000 {
+			dp_video_clk: clock-generator@80000000 {
 				#address-cells = <2>;
 				#clock-cells = <1>;
 				clock-names = "clk_in1", "s_axi_aclk";
 				clock-output-names = "clk_out1";
 				clocks = <&misc_clk_0>, <&misc_clk_2>;
 				compatible = "xlnx,clocking-wizard";
-				reg = <0x0 0x80020000 0x0 0x10000>;
+				reg = <0x0 0x80000000 0x0 0x10000>;
 				speed-grade = <2>;
 			};
 
@@ -169,18 +169,18 @@
 				xlnx,pixels-per-clock = <1>;
 			};
 
-			v_mix: v_mix@80000000 {
+			v_mix: v_mix@B0000000 {
 				clocks = <&misc_clk_0>;
 				compatible = "xlnx,v-mix-5.1", "xlnx,mixer-3.0", "xlnx,mixer-4.0", "xlnx,mixer-5.0";
 				interrupt-names = "interrupt";
 				interrupt-parent = <&gic>;
 				interrupts = <0 104 4>;
-				reg = <0x0 0x80000000 0x0 0x10000>;
+				reg = <0x0 0xB0000000 0x0 0x10000>;
 				xlnx,bpc = <8>;
 				xlnx,dma-addr-width = <32>;
 				xlnx,num-layers = <6>;
 				xlnx,ppc = <1>;
-				xlnx,disp-bridge = <&vid_layer>;
+				xlnx,disp-bridge = <&zynqmp_dpsub>;
 				reset-gpios = <&gpio 78 1>;
 
 				mixer_port: port {
