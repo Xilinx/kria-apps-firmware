@@ -10,54 +10,36 @@
 /dts-v1/;
 /plugin/;
 
-/{
+&{/} {
 	compatible = "xlnx,zynqmp-sk-kv260-revB",
 		     "xlnx,zynqmp-sk-kv260-revA",
 		     "xlnx,zynqmp-sk-kv260-revY",
 		     "xlnx,zynqmp-sk-kv260-revZ",
 		     "xlnx,zynqmp-sk-kv260", "xlnx,zynqmp";
+};
 
-	fragment@0 {
-		target = <&fpga_full>;
-		overlay0: __overlay__ {
-			#address-cells = <2>;
-			#size-cells = <2>;
-			firmware-name = "kv260-dp.bit.bin";
-		};
-	};
+&fpga_full {
+	#address-cells = <2>;
+	#size-cells = <2>;
+	firmware-name = "kv260-dp.bit.bin";
+};
 
-	fragment4 {
-		target = <&zynqmp_dpsub>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
+&zynqmp_dpsub {
+	status = "okay";
+};
 
-	fragment5 {
-		target = <&zynqmp_dp_snd_pcm0>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
+&zynqmp_dp_snd_pcm0 {
+	status = "okay";
+};
 
-	fragment6 {
-		target = <&zynqmp_dp_snd_pcm1>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
+&zynqmp_dp_snd_pcm1 {
+	status = "okay";
+};
 
-	fragment7 {
-		target = <&zynqmp_dp_snd_card0>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
+&zynqmp_dp_snd_card0 {
+	status = "okay";
+};
 
-	fragment8 {
-		target = <&zynqmp_dp_snd_codec0>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
+&zynqmp_dp_snd_codec0 {
+	status = "okay";
 };
