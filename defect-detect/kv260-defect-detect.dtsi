@@ -57,6 +57,7 @@
 		};
 	};
 
+/*
 	fragment@3 {
 		target = <&zynqmp_dp_snd_pcm0>;
 		__overlay__ {
@@ -84,8 +85,8 @@
 			status = "okay";
 		};
 	};
-
-	fragment@7 {
+*/
+	fragment@3 {
 		target = <&amba>;
 		overlay7: __overlay__ {
 			#address-cells = <2>;
@@ -112,7 +113,7 @@
 	};
 
 	/* ar0144 isp mipi rx pipeline */
-	fragment@8 {
+	fragment@4 {
 		target = <&amba>;
 		overlay8: __overlay__ {
 			ap1302_clk: sensor_clk {
@@ -205,7 +206,7 @@
 				clocks = <&misc_clk_0>, <&misc_clk_2>, <&misc_clk_1>;
 				interrupt-parent = <&gic>;
 				interrupts = <0 107 4>;
-				xlnx,csi-pxl-format = "YUV422_8bit";
+				xlnx,csi-pxl-format = <0x18>;
 				xlnx,axis-tdata-width = <32>;
 				xlnx,max-lanes = <1>;
 				xlnx,en-active-lanes;
@@ -305,7 +306,7 @@
 	};
 
 	/* video mixer display pipeline */
-	fragment@9 {
+	fragment@5 {
 		target = <&amba>;
 		overlay9: __overlay__ {
 			dp_video_clk: clock-generator@80020000 {
@@ -393,7 +394,7 @@
 	};
 
 	/* zocl */
-	fragment@10 {
+	fragment@6 {
 		target = <&amba>;
 		overlay10: __overlay__ {
 			zocl: zyxclmm_drm {
