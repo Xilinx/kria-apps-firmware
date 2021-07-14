@@ -340,7 +340,7 @@
 				xlnx,dma-addr-width = <32>;
 				xlnx,num-layers = <6>;
 				xlnx,ppc = <1>;
-				xlnx,disp-bridge = <&vid_layer>;
+				xlnx,disp-bridge = <&zynqmp_dpsub>;
 
 				mixer_port: port {
 					reg = <0>;
