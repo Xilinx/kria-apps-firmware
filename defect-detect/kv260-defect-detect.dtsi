@@ -57,35 +57,6 @@
 		};
 	};
 
-/*
-	fragment@3 {
-		target = <&zynqmp_dp_snd_pcm0>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
-
-	fragment@4 {
-		target = <&zynqmp_dp_snd_pcm1>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
-
-	fragment@5 {
-		target = <&zynqmp_dp_snd_card0>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
-
-	fragment@6 {
-		target = <&zynqmp_dp_snd_codec0>;
-		__overlay__ {
-			status = "okay";
-		};
-	};
-*/
 	fragment@3 {
 		target = <&amba>;
 		overlay7: __overlay__ {
@@ -218,8 +189,8 @@
 					#address-cells = <0x1>;
 					#size-cells = <0x0>;
 
-					port@0 {
-						reg = <0x0>;
+					port@1 {
+						reg = <0x1>;
 						xlnx,video-format = <0>;
 						xlnx,video-width = <0x8>;
 
@@ -227,8 +198,8 @@
 							remote-endpoint = <&sw_conv_in>;
 						};
 					};
-					port@1 {
-						reg = <0x1>;
+					port@0 {
+						reg = <0x0>;
 						xlnx,video-format = <0x0>;
 						xlnx,video-width = <0x8>;
 
