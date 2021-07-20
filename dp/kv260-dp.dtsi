@@ -10,14 +10,6 @@
 /dts-v1/;
 /plugin/;
 
-&{/} {
-	compatible = "xlnx,zynqmp-sk-kv260-revB",
-		     "xlnx,zynqmp-sk-kv260-revA",
-		     "xlnx,zynqmp-sk-kv260-revY",
-		     "xlnx,zynqmp-sk-kv260-revZ",
-		     "xlnx,zynqmp-sk-kv260", "xlnx,zynqmp";
-};
-
 &fpga_full {
 	#address-cells = <2>;
 	#size-cells = <2>;
