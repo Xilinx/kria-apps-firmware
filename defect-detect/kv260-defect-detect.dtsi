@@ -177,7 +177,7 @@
 				clocks = <&misc_clk_0>, <&misc_clk_2>, <&misc_clk_1>;
 				interrupt-parent = <&gic>;
 				interrupts = <0 107 4>;
-				xlnx,csi-pxl-format = <0x18>;
+				xlnx,csi-pxl-format = <0x1e>;
 				xlnx,axis-tdata-width = <32>;
 				xlnx,max-lanes = <1>;
 				xlnx,en-active-lanes;
