@@ -174,7 +174,7 @@
 				xlnx,video-width = <0x8>;
 
 				isp_csiss_out: endpoint {
-					remote-endpoint = <&sw_conv_in>;
+					remote-endpoint = <&fmt_conv_in>;
 				};
 			};
 			port@0 {
@@ -190,9 +190,8 @@
 		};
 	};
 
-	isp_sw_convertor {
-		compatible = "xlnx,sw-convertor";
-		xlnx,pxl-format = "YUV422_8bit";
+	isp_fmt_convertor {
+		compatible = "xlnx,fmtconv";
 
 		ports {
 			port@0 {
@@ -201,7 +200,7 @@
 				xlnx,video-width = <0x8>;
 				xlnx,cfa-pattern = "mono";
 
-				sw_conv_out: endpoint {
+				fmt_conv_out: endpoint {
 					remote-endpoint = <&isp_vcap_csi_in>;
 				};
 			};
@@ -210,7 +209,7 @@
 				xlnx,video-format = <0x0>;
 				xlnx,video-width = <0x8>;
 
-				sw_conv_in: endpoint {
+				fmt_conv_in: endpoint {
 					remote-endpoint = <&isp_csiss_out>;
 				};
 			};
@@ -247,7 +246,7 @@
 				direction = "input";
 
 				isp_vcap_csi_in: endpoint {
-					remote-endpoint = <&sw_conv_out>;
+					remote-endpoint = <&fmt_conv_out>;
 				};
 			};
 		};
