@@ -174,7 +174,7 @@
 				xlnx,video-width = <0x8>;
 
 				isp_csiss_out: endpoint {
-					remote-endpoint = <&fmt_conv_in>;
+					remote-endpoint = <&subset_conv_in>;
 				};
 			};
 			port@0 {
@@ -190,27 +190,19 @@
 		};
 	};
 
-	isp_fmt_convertor {
-		compatible = "xlnx,fmtconv";
-
+	axis_subset_conv: isp_subset_convertor {
+		compatible = "xlnx,axis-subsetconv-1.1";
 		ports {
 			port@0 {
 				reg = <0x0>;
-				xlnx,video-format = <0xC>;
-				xlnx,video-width = <0x8>;
-				xlnx,cfa-pattern = "mono";
-
-				fmt_conv_out: endpoint {
-					remote-endpoint = <&isp_vcap_csi_in>;
+				subset_conv_in: endpoint {
+					remote-endpoint = <&isp_csiss_out>;
 				};
 			};
 			port@1 {
 				reg = <0x1>;
-				xlnx,video-format = <0x0>;
-				xlnx,video-width = <0x8>;
-
-				fmt_conv_in: endpoint {
-					remote-endpoint = <&isp_csiss_out>;
+				subset_conv_out: endpoint {
+					remote-endpoint = <&isp_vcap_csi_in>;
 				};
 			};
 		};
@@ -246,7 +238,7 @@
 				direction = "input";
 
 				isp_vcap_csi_in: endpoint {
-					remote-endpoint = <&fmt_conv_out>;
+					remote-endpoint = <&subset_conv_out>;
 				};
 			};
 		};
