@@ -19,6 +19,7 @@ Each set of firmware files consists of:
 
 ## Supported KR260 application firmware
 1. tsn-rs485pmod
+2. mv-camera
 
 # License
 
