@@ -70,6 +70,14 @@
 		xlnx,num-intr-inputs = <0x20>;
 	};
 
+	axi_uartlite_0: serial@80010000 {
+		compatible = "xlnx,axi-uartlite-rs485";
+		interrupt-parent = <&axi_intc_0>;
+		interrupts = <15 0>;
+		port-number = <0>;
+		reg = <0x0 0x80010000 0x0 0x10000>;
+	};
+
 	axi_mcdma_0: axi_mcdma@80000000 {
 		#dma-cells = <1>;
 		compatible = "xlnx,axi-mcdma-1.1";
@@ -79,34 +87,8 @@
 		reg = <0x0 0x80000000 0x0 0x1000>;
 		xlnx,addrwidth = <0x20>;
 		xlnx,include-dre ;
-		xlnx,include-sg ;
 		xlnx,num-mm2s-channels = <0x2>;
 		xlnx,num-s2mm-channels = <0x4>;
-		xlnx,sg-length-width = <0xe>;
-		dma-channel@80000000 {
-			compatible = "xlnx,axi-dma-mm2s-channel";
-			dma-channels = <0x2>;
-			interrupt-parent = <&axi_intc_0>;
-			interrupts = <9 2 10 2>;
-			xlnx,datawidth = <0x20>;
-			xlnx,include-dre ;
-		};
-		dma-channel@80000030 {
-			compatible = "xlnx,axi-dma-s2mm-channel";
-			dma-channels = <0x4>;
-			interrupt-parent = <&axi_intc_0>;
-			interrupts = <11 2 12 2 13 2 14 2>;
-			xlnx,datawidth = <0x20>;
-			xlnx,include-dre ;
-		};
-	};
-
-	axi_uartlite_0: serial@80010000 {
-		compatible = "xlnx,axi-uartlite-rs485";
-		interrupt-parent = <&axi_intc_0>;
-		interrupts = <15 0>;
-		port-number = <1>;
-		reg = <0x0 0x80010000 0x0 0x10000>;
 	};
 
 	tsn_endpoint_ip_0: tsn_endpoint_ip_0 {
@@ -118,6 +100,41 @@
 		interrupts = <0 2 2 2 4 2 7 2 6 2 1 2 3 2 5 2>;
 		ranges ;
 		reg = <0x0 0x80040000 0x0 0x40000>;
+
+		tsn_emac_1: tsn_emac_1@80060000 {
+			compatible = "xlnx,tsn-ethernet-1.00.a";
+			interrupt-names = "interrupt_ptp_rx_2", "interrupt_ptp_tx_2", "mac_irq_2";
+			interrupt-parent = <&axi_intc_0>;
+			interrupts = <1 2 3 2 5 2>;
+			local-mac-address = [00 0A 35 00 01 0f];
+			phy-handle = <&phy20>;
+			phy-mode = "rgmii-id";
+			reg = <0x0 0x80060000 0x0 0x14000>;
+			tsn,endpoint = <&tsn_ep>;
+			xlnx,eth-hasnobuf ;
+			xlnx,num-queues = /bits/ 16 <0x4>;
+			xlnx,num-tc = /bits/ 16 <0x2>;
+			xlnx,phy-type = <0x3>;
+			xlnx,qbv-addr = <0x80074000>;
+			xlnx,qbv-size = <0x4000>;
+			xlnx,rxsum = <0>;
+			xlnx,tsn ;
+			xlnx,tsn-slave ;
+			xlnx,txsum = <0>;
+			my_tsn_ip_mdio1: mdio {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				phy20: phy@3 {
+					reg = <0x3>;
+					ti,rx-internal-delay = <0x4>;
+					ti,tx-internal-delay = <0x4>;
+					tx-fifo-depth = <0x1>;
+					rx-fifo-depth = <0x1>;
+					ti,dp83867-rxctrl-strap-quirk;
+				};
+			};
+		};
+
 		tsn_emac_0: tsn_emac_0@80040000 {
 			axistream-connected-rx = <&axi_mcdma_0>, <&axi_mcdma_0>;
 			axistream-connected-tx = <&axi_mcdma_0>, <&ta_dma_0>;
@@ -153,6 +170,7 @@
 				};
 			};
 		};
+
 		epswitch: tsn_switch@80078000 {
 			compatible = "xlnx,tsn-switch";
 			ports = <&tsn_ep>, <&tsn_emac_0>, <&tsn_emac_1>;
@@ -161,6 +179,7 @@
 			xlnx,num-ports = /bits/ 16 <0x3>;
 			xlnx,num-tc = /bits/ 16 <0x2>;
 		};
+
 		tsn_ep: tsn_ep@80056000 {
 			axistream-connected-rx = <&axi_mcdma_0>, <&axi_mcdma_0>;
 			axistream-connected-tx = <&axi_mcdma_0>, <&ta_dma_0>;
@@ -173,39 +192,6 @@
 			xlnx,channel-ids = "1","2","3","4";
 			xlnx,eth-hasnobuf ;
 			xlnx,num-tc = /bits/ 16 <0x2>;
-		};
-		tsn_emac_1: tsn_emac_1@80060000 {
-			compatible = "xlnx,tsn-ethernet-1.00.a";
-			interrupt-names = "interrupt_ptp_rx_2", "interrupt_ptp_tx_2", "mac_irq_2";
-			interrupt-parent = <&axi_intc_0>;
-			interrupts = <1 2 3 2 5 2>;
-			local-mac-address = [00 0A 35 00 01 0f];
-			phy-handle = <&phy20>;
-			phy-mode = "rgmii-id";
-			reg = <0x0 0x80060000 0x0 0x14000>;
-			tsn,endpoint = <&tsn_ep>;
-			xlnx,eth-hasnobuf ;
-			xlnx,num-queues = /bits/ 16 <0x4>;
-			xlnx,num-tc = /bits/ 16 <0x2>;
-			xlnx,phy-type = <0x3>;
-			xlnx,qbv-addr = <0x80074000>;
-			xlnx,qbv-size = <0x4000>;
-			xlnx,rxsum = <0>;
-			xlnx,tsn ;
-			xlnx,tsn-slave ;
-			xlnx,txsum = <0>;
-			my_tsn_ip_mdio1: mdio {
-				#address-cells = <1>;
-				#size-cells = <0>;
-				phy20: phy@3 {
-					reg = <0x3>;
-					ti,rx-internal-delay = <0x4>;
-					ti,tx-internal-delay = <0x4>;
-					tx-fifo-depth = <0x1>;
-					rx-fifo-depth = <0x1>;
-					ti,dp83867-rxctrl-strap-quirk;
-				};
-			};
 		};
 	};
 
