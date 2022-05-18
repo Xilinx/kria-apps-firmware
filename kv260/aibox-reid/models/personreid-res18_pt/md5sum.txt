@@ -1,2 +1,1 @@
-6e30f62ecc0be33f2c3d564a47415301  personreid-res18_pt.prototxt
-6ac53e8281be3b8b0eb0e3998a287a00  personreid-res18_pt.xmodel
+0075514ba2d03bd1b99f0291dc46c4c8

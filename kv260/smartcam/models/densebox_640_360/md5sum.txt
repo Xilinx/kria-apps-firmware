@@ -1,2 +1,1 @@
-62239c022d967f0c273a91de4eccf603  densebox_640_360.prototxt
-a55a56f4c0cfa51d1cef0fc43ec25dae  densebox_640_360.xmodel
+226bf356c3e7ad6c3b1b82635e857527
