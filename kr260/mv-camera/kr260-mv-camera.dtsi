@@ -211,14 +211,21 @@
 				compatible = "fixed-clock";
 			};
 			gev_xgige_0: xgige@a0060000 {
-				/* This is a place holder node for a custom IP, user may need to update the entries */
 				clock-names = "s0_axi_aclk", "rx_axis_aclk";
 				clocks = <&misc_clk_0>, <&misc_clk_2>;
-				compatible = "xlnx,xgige-2.1.2";
+				compatible = "xlnx,axi-epc-2.0", "s2i,s2imac-epc";
+				device_type = "network";
 				interrupt-names = "sys_irq";
 				interrupt-parent = <&gic>;
 				interrupts = <0 90 4>;
-				reg = <0x0 0xa0060000 0x0 0x10000>;
+				reg = <0x0 0xa0060000 0x0 0x10000 0x0 0xa0000000 0x0 0x10000 0x0 0xa0040000 0x0 0x10000>;
+				reg-names = "core", "video", "framebuffer";
+				clock-frequency = <0x5f5e100>;
+				status = "okay";
+				config-interface = "DEFAULT";
+				phy-base-address = <0xa0070000>;
+				phy-base-address-length = <0x10000>;
+				local-mac-address = [00 0a 35 00 22 02];
 			};
 			misc_clk_2: misc_clk_2 {
 				#clock-cells = <0>;
