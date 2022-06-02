@@ -1,2 +1,1 @@
-677066a6658d9629a4fbf9d8e34ee96a  ssd_adas_pruned_0_95.prototxt
-c9e206b714aad42169053f5de920f63c  ssd_adas_pruned_0_95.xmodel
+74289d5c65e04d2f075cb191e67d7f7f

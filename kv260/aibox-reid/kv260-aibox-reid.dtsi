@@ -93,8 +93,8 @@
 		#address-cells = <2>;
 		#clock-cells = <1>;
 		#size-cells = <2>;
-		clock-names = "pll_ref", "aclk", "vcu_core_enc", "vcu_core_dec", "vcu_mcu_enc", "vcu_mcu_dec";
-		clocks = <&misc_clk_3>, <&misc_clk_2>, <&vcu 1>, <&vcu 2>, <&vcu 3>, <&vcu 4>;
+		clock-names = "pll_ref", "aclk", "vcu_core_enc", "vcu_mcu_enc", "vcu_core_dec","vcu_mcu_dec";
+		clocks = <&misc_clk_3>, <&misc_clk_2>, <&vcu 0>, <&vcu 1>, <&vcu 2>, <&vcu 3>;
 		compatible = "xlnx,vcu-1.2", "xlnx,vcu";
 		interrupt-names = "vcu_host_interrupt";
 		interrupt-parent = <&gic>;
