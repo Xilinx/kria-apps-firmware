@@ -204,4 +204,11 @@
 		xlnx,num-fetch-entries = <0x8>;
 		xlnx,num-streams = <0x8>;
 	};
+
+	tpmod_ctrl_0: tpmod_ctrl@80030000 {
+		compatible = "generic-uio";
+		linux,uio-name = "tpmod_ctrl";
+		reg = <0x0 0x80030000 0x0 0x1000>;
+	};
+
 };
