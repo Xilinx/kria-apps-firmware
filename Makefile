@@ -1,9 +1,10 @@
 # subdirectories of kr260 and kv260 under source directory - one per app
 APPS := $(wildcard kr260/*/ kv260/*/)
 
-# *.bit, *.dtsi and shell.json files under these specific directories
+# *.bit, *.dtsi, *.xclbin and shell.json files under these specific directories
 BITS := $(wildcard $(patsubst %,%*.bit,$(APPS)))
 DTSIS := $(wildcard $(patsubst %,%*.dtsi,$(APPS)))
+XCLBINS := $(wildcard $(patsubst %,%*.xclbin,$(APPS)))
 JSONS := $(wildcard $(patsubst %,%shell.json,$(APPS)))
 
 # *.dtbo files to generate
@@ -38,7 +39,7 @@ clean:
 
 INSTALLDIR := $(DESTDIR)/lib/firmware/xilinx
 
-install: $(BINS) $(DTBOS) $(JSONS)
+install: $(BINS) $(DTBOS) $(XCLBINS) $(JSONS)
 	for f in $^; do \
 	    file=$$(basename $$f); \
 	    app=$$(basename $$(dirname $$f)); \
