@@ -45,7 +45,7 @@ install: $(BINS) $(DTBOS) $(XCLBINS) $(JSONS)
 	    app=$$(basename $$(dirname $$f)); \
 	    board=$$(basename $$(dirname $$(dirname $$f))); \
 	    install -D -m 644 \
-	        $$f $(INSTALLDIR)/xilinx-app-$$board-$$app/$$file; \
+	        $$f $(INSTALLDIR)/$$board-$$app/$$file; \
 	done
 
 
