@@ -190,6 +190,16 @@
 				compatible = "xlnx,slvs-ec-rx-1.5";
 				reg = <0x0 0xa0020000 0x0 0x10000>;
 			};
+
+			ppi_video@a0030000 {
+				clock-names = "axi_aclk";
+				clocks = <&misc_clk_0>;
+				compatible = "xlnx,ppi-video-1.0";
+				reg = <0x0 0xa0030000 0x0 0x10000>;
+				xlnx,s00-axi-addr-width = <0x4>;
+				xlnx,s00-axi-data-width = <0x20>;
+			};
+
 			gev_framebuf_0: framebuf@a0040000 {
 				/* This is a place holder node for a custom IP, user may need to update the entries */
 				compatible = "xlnx,framebuf-2.1.2";
@@ -198,12 +208,12 @@
 				interrupts = <0 89 4>;
 				reg = <0x0 0xa0040000 0x0 0x10000>;
 			};
-			gev_gendcip_0: gendcip@a0050000 {
+			gev_gendcip_0: gendcip@a0008000 {
 				/* This is a place holder node for a custom IP, user may need to update the entries */
 				clock-names = "s0_axi_aclk", "s1_axis_aclk";
 				clocks = <&misc_clk_0>, <&misc_clk_1>;
-				compatible = "xlnx,gendcip-1.0.2";
-				reg = <0x0 0xa0050000 0x0 0x10000>;
+				compatible = "xlnx,gendcip-1.0.3";
+				reg = <0x0 0xa0008000 0x0 0x8000>;
 			};
 			misc_clk_1: misc_clk_1 {
 				#clock-cells = <0>;
