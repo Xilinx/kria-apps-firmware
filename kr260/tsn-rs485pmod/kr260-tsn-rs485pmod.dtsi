@@ -12,7 +12,7 @@
 &fpga_full {
 	#address-cells = <2>;
 	#size-cells = <2>;
-	firmware-name = "tsn-rs485pmod.bit.bin";
+	firmware-name = "kr260-tsn-rs485pmod.bit.bin";
 	resets = <&zynqmp_reset 116>;
 };
 
