@@ -1,10 +1,10 @@
-The XCLBIN, BITSTREAM or BIT, and XMODEL files distributed with this project are
+The XCLBIN and BITSTREAM or BIT files distributed with this project are
 provided in binary form under the following free and permissive binary-only
 license; source files are not provided. While the following free and permissive
 license is similar to the BSD open source license, it is NOT the BSD open source
 license or any other OSI-approved open-source license.
 
-Copyright (c) 2020 Xilinx, Inc.
+Copyright (c) 2020 - 2022 Xilinx, Inc.
 
 Redistribution and use in binary form only, without modification, is permitted
 provided that the following conditions are met:
