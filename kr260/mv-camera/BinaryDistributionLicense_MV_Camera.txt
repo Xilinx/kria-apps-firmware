@@ -1,6 +1,6 @@
 The files distributed with this project are provided in binary form under the following free and permissive binary-only license; source files are not provided. While the following free and permissive license is similar to the BSD open source license, it is NOT the BSD open source license or any other OSI-approved open-source license.
 
-Copyright (c) 2020 Xilinx, Inc., Sensor To Image GMBH and Framos Technologies Inc.
+Copyright (c) 2022 Xilinx, Inc., Sensor To Image GMBH and Framos Technologies Inc.
 
 Redistribution and use in binary form only, without modification, is permitted
 provided that the following conditions are met:
