@@ -1,4 +1,7 @@
-The files distributed with this project are provided in binary form under the following free and permissive binary-only license; source files are not provided. While the following free and permissive license is similar to the BSD open source license, it is NOT the BSD open source license or any other OSI-approved open-source license.
+The files distributed with this project are provided in binary form under the following 
+free and permissive binary-only license; source files are not provided. While the 
+following free and permissive license is similar to the BSD open source license, it is
+NOT the BSD open source license or any other OSI-approved open-source license.
 
 Copyright (c) 2022 Xilinx, Inc., Sensor To Image GMBH and Framos Technologies Inc.
 
@@ -8,7 +11,9 @@ provided that the following conditions are met:
 1. Redistributions must reproduce the above copyright notice, this list of
    conditions and the following disclaimer in the documentation and/or other
    materials provided with the distribution.
-2. The names of Xilinx, Inc., Sensor To Image GMBH and Framos Technologies Inc. may not be used to endorse or promote products redistributed with this software without specific prior written permission.
+2. The names of Xilinx, Inc., Sensor To Image GMBH and Framos Technologies Inc. may 
+   not be used to endorse or promote products redistributed with this software without 
+   specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
