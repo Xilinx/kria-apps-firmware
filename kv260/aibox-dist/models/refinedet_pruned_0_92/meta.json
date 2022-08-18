@@ -1,8 +1,0 @@
-{
-    "lib": "libvart-dpu-runner.so",
-    "filename": "refinedet_pruned_0_92.xmodel",
-    "kernel": [
-        "subgraph_Elt3"
-    ],
-    "target": "DPUCZDX8G_ISA1_B3136"
-}
