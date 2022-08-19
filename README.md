@@ -8,7 +8,6 @@ Each set of firmware files consists of:
 2. Xclbin binary (optional)
 3. Device tree overlay source
 4. json file required by dfx-mgr
-5. Vitis AI models (optional)
 
 ## Supported KV260 application firmware
 1. smartcam
@@ -54,7 +53,7 @@ sudo make
 
 # License
 
-The XCLBIN, BITSTREAM or BIT, and XMODEL files distributed with this project are
+The XCLBIN and BITSTREAM or BIT files distributed with this project are
 provided in binary form under free and permissive binary-only licenses; source
 files are not provided. While the free and permissive licenses are similar to
 the BSD open source license, it is NOT the BSD open source license or any other

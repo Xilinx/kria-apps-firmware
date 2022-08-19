@@ -1,8 +1,0 @@
-{
-    "lib": "libvart-dpu-runner.so",
-    "filename": "person-orientation_pruned_558m_pt.xmodel",
-    "kernel": [
-        "subgraph_Orientation__Orientation_Linear_classifier__6506(TransferMatMulToConv2d)"
-    ],
-    "target": "DPUCZDX8G_ISA1_B3136"
-}

@@ -1,8 +1,0 @@
-{
-    "lib": "libvart-dpu-runner.so",
-    "filename": "personreid-res18_pt.xmodel",
-    "kernel": [
-        "subgraph_Baseline__Baseline_AdaptiveAvgPool2d_gap__486_i0"
-    ],
-    "target": "DPUCZDX8G_ISA1_B3136"
-}
