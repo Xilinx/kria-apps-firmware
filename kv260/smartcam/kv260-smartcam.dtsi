@@ -232,7 +232,7 @@
 	};
 
 	/* i2s rx/tx audio pipeline */
-	i2s_audio_formatter: audio_formatter@80040000 {
+/*	i2s_audio_formatter: audio_formatter@80040000 {
 		clock-names = "s_axi_lite_aclk", "m_axis_mm2s_aclk", "aud_mclk", "s_axis_s2mm_aclk";
 		clocks = <&misc_clk_0>, <&misc_clk_6>, <&misc_clk_6>, <&misc_clk_0>;
 		compatible = "xlnx,audio-formatter-1.0", "xlnx,audio-formatter-1.0";
@@ -282,7 +282,7 @@
 		xlnx,dwidth = <0x18>;
 		xlnx,num-channels = <0x1>;
 		xlnx,snd-pcm = <&i2s_audio_formatter>;
-	};
+	}; */
 
 	/* vcu encode/decode */
 	vcu: vcu@80100000 {
