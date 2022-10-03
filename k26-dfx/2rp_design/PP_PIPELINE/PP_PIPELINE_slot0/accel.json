@@ -1,0 +1,17 @@
+{
+  "AccelHandshakeType": "streamDataFromTrg",
+  "accel_devices": [
+    {
+      "dev_name": "80000000.AccelConfig",
+      "reg_base": "",
+      "reg_size": "65536"
+    },
+    {
+      "dev_name": "81000000.rm_comm_box",
+      "reg_base": "",
+      "reg_size": ""
+    }
+  ],
+  "accel_metadata": {},
+  "accel_type": "SIHA_PL_DFX"
+}

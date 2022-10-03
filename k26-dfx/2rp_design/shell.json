@@ -1,0 +1,15 @@
+{
+    "shell_type" : "PL_DFX",
+    "num_pl_slots"  : "2",
+    "device_name" : "a0100000.SIHA_Manager",
+    "isolation_slots": [
+		{
+			"offset": ["0x4000","0x4004","0x4008","0x400c"],
+			"values": ["0x01","0x01", "0x0b", "0x02"]
+		},
+		{
+			"offset": ["0x5000","0x5004","0x5008","0x500c"],
+			"values": ["0x01","0x01", "0x0b", "0x02"]
+		}],
+     "load_base_design":"yes"
+}
