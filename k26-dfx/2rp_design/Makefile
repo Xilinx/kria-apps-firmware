@@ -15,7 +15,7 @@ DTBOS := $(patsubst %.dtsi,%.dtbo,$(DTSIS))
 	dtc -I dts -O dtb -o $@ -@ $<
 
 # *.bif template
-BIF_TEMPLATE := ../../template.bif
+BIF_TEMPLATE := template.bif
 
 # *.bif and *.bins files to generate
 BIFS := $(patsubst %.bit,%.bif,$(BITS))
