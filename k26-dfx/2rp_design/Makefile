@@ -1,3 +1,6 @@
+# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+
 # subdirectories of kr260 and kv260 under source directory - one per app
 APPS := $(wildcard ./ */*/ */*/)
 
