@@ -11,7 +11,7 @@
 	fragment@0 {
 		target = <&fpga_PR0>;
     	__overlay__ {
-		firmware-name = "opendfx_shell_i_RP_0_FIR_compiler_inst_1_partial.bit.bin";
+		firmware-name = "opendfx_shell_i_RP_0_FIR_compiler_inst_0_partial.bit.bin";
 		partial-fpga-config ;
 		};
 	};
