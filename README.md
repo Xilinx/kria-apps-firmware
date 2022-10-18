@@ -10,7 +10,7 @@ For kr260 and kv260, each set of firmware files consists of:
 4. json file required by dfx-mgr
 
 For k26-dfx/2rp_design each set of firmware files consists of shell and reconfigurable module(RM) files.
-**Shell files**
+**Flat or DFX shell design files**
 1. PL base shell bitstream
 2. Shell device tree overlay source
 3. shell json required by dfx-mgr.
