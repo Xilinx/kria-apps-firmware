@@ -34,7 +34,7 @@ For each DFX slot, the following RM files are provided:
 1. tsn-rs485pmod
 2. mv-camera
 
-## Supported k26-dfx/2rp_design application firmware
+## Supported k26-dfx/2rp_design RM application firmware
 1. AES192
 2. AES128
 3. FFT
@@ -52,7 +52,7 @@ Following are example illustrations
 Users can compile and Install binaries at runtime on xilinx target using the
 following commands.
 
-For kr-260 and kv-260
+For kr-260 and kv-260 flat bitstreams
 ```
 sudo apt install bootgen-xlnx
 git clone https://github.com/Xilinx/kria-apps-firmware.git
@@ -60,7 +60,7 @@ cd kria-apps-firmware
 sudo make install
 ```
 
-For k26-dfx/2rp_design
+For k26-dfx/2rp_design DFX bitstreams
 ```
 sudo apt install bootgen-xlnx
 git clone https://github.com/Xilinx/kria-apps-firmware.git
@@ -75,14 +75,14 @@ Bootgen from the Vivado Design Suite installer see (UG973) for all possible
 installation options.
 Run make on a linux host machine to build reqiured binaries.
 
-For kr-260 and kv-260
+For kr-260 and kv-260 flat bitstreams
 ```
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware
 sudo make
 ```
 
-For k26-dfx/2rp_design
+For k26-dfx/2rp_design DFX bitstreams
 ```
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware/k26-dfx/2rp_design
