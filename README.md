@@ -16,7 +16,7 @@ For k26-dfx/2rp_design each set of firmware files consists of shell and reconfig
 3. shell json required by dfx-mgr.
 
 **RM files**
-There are two DFX slots on k26 DFX design. RM has two directories, one corresponding to each slot. 
+There are two DFX slots on k26 DFX design. RM has two directories, one corresponding to each slot.
 For each DFX slot, the following RM files are provided:
 1. RM partial bitfile
 2. RM Device tree overlay source
@@ -52,22 +52,29 @@ Following are example illustrations
 Users can compile and Install binaries at runtime on xilinx target using the
 following commands.
 
-For kr-260 and kv-260 flat bitstreams
+To build and install all the bitstreams (flat and dfx)
+```
+sudo apt install bootgen-xlnx
+git clone https://github.com/Xilinx/kria-apps-firmware.git
+cd kria-apps-firmware/
+sudo make install
+```
+
+For kr-260 and kv-260 flat bitstreams only
 ```
 sudo apt install bootgen-xlnx
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware
-sudo make install
+sudo make -C boards/ install
 ```
 
-For k26-dfx/2rp_design DFX bitstreams
+For k26-dfx/2rp_design DFX bitstreams only
 ```
 sudo apt install bootgen-xlnx
 git clone https://github.com/Xilinx/kria-apps-firmware.git
-cd kria-apps-firmware/k26-dfx/2rp_design
-sudo make install
+cd kria-apps-firmware/
+sudo make -C k26-dfx/2rp_design install
 ```
-
 
 ### Compilation on Linux Host machine
 Source the 'bootgen utility' a dependent tool before running make. You can install
@@ -75,18 +82,25 @@ Bootgen from the Vivado Design Suite installer see (UG973) for all possible
 installation options.
 Run make on a linux host machine to build reqiured binaries.
 
-For kr-260 and kv-260 flat bitstreams
+For all bitstreams (flat and dfx)
 ```
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware
 sudo make
 ```
 
-For k26-dfx/2rp_design DFX bitstreams
+For kr-260 and kv-260 flat bitstreams only
 ```
 git clone https://github.com/Xilinx/kria-apps-firmware.git
-cd kria-apps-firmware/k26-dfx/2rp_design
-sudo make
+cd kria-apps-firmware
+sudo make -C boards/
+```
+
+For k26-dfx/2rp_design DFX bitstreams only
+```
+git clone https://github.com/Xilinx/kria-apps-firmware.git
+cd kria-apps-firmware
+sudo make -C k26-dfx/2rp_design
 ```
 
 
