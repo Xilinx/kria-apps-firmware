@@ -1,53 +1,23 @@
-# subdirectories of kr260 and kv260 under source directory - one per app
-APPS := $(wildcard kr260/*/ kv260/*/)
+# Path to board specific firmwares to build.
+BOARDS := boards/
 
-# *.bit, *.dtsi, *.xclbin and shell.json files under these specific directories
-BITS := $(wildcard $(patsubst %,%*.bit,$(APPS)))
-DTSIS := $(wildcard $(patsubst %,%*.dtsi,$(APPS)))
-XCLBINS := $(wildcard $(patsubst %,%*.xclbin,$(APPS)))
-JSONS := $(wildcard $(patsubst %,%shell.json,$(APPS)))
-
-# *.dtbo files to generate
-DTBOS := $(patsubst %.dtsi,%.dtbo,$(DTSIS))
-
-%.dtbo: %.dtsi
-	dtc -I dts -O dtb -o $@ $<
-
-# *.bif template
-BIF_TEMPLATE := template.bif
-
-# *.bif and *.bins files to generate
-BIFS := $(patsubst %.bit,%.bif,$(BITS))
-BINS := $(patsubst %.bit,%.bin,$(BITS))
-
-%.bif: %.bit
-	sed 's#@BIT@#$<#' <$(BIF_TEMPLATE) >$@
-
-%.bin: %.bif
-	bootgen -image $< -arch zynqmp -o $@ -w
+# Path to 2rp dfx designs
+K26_DFX := k26-dfx/2rp_design
 
 default: all
 
-all: bins dtbos
-bins: $(BINS)
-dtbos: $(DTBOS)
+all: build
+
+build: $(BOARDS) $(K26_DFX)
+	make -C $(BOARDS)
+	make -C $(K26_DFX)
 
 clean:
-	rm -f $(BIFS)
-	rm -f $(BINS)
-	rm -f $(DTBOS)
+	make -C $(BOARDS) clean
+	make -C $(K26_DFX) clean
 
-INSTALLDIR := $(DESTDIR)/lib/firmware/xilinx
+install:
+	make -C $(BOARDS) install DESTDIR=$(DESTDIR)
+	make -C $(K26_DFX) install DESTDIR=$(DESTDIR)
 
-install: $(BINS) $(DTBOS) $(XCLBINS) $(JSONS)
-	for f in $^; do \
-	    file=$$(basename $$f); \
-	    app=$$(basename $$(dirname $$f)); \
-	    board=$$(basename $$(dirname $$(dirname $$f))); \
-	    install -D -m 644 \
-	        $$f $(INSTALLDIR)/$$board-$$app/$$file; \
-	done
-
-
-.PHONY: default all bins dtbos clean install
-
+.PHONY: default all build clean install
