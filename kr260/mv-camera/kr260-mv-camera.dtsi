@@ -8,51 +8,41 @@
 
 /dts-v1/;
 /plugin/;
-/ {
-	fragment@0 {
-		target = <&fpga_full>;
-		overlay0: __overlay__ {
-			#address-cells = <2>;
-			#size-cells = <2>;
-			firmware-name = "kr260-mv-camera.bit.bin";
-			resets = <&zynqmp_reset 116>,<&zynqmp_reset 117>;
-		};
-	};
-	fragment@1 {
-		target = <&amba>;
-		overlay1: __overlay__ {
-			clocking0: clocking0 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <99999001>;
-				assigned-clocks = <&zynqmp_clk 71>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 71>;
-				compatible = "xlnx,fclk";
-			};
-			clocking1: clocking1 {
-				#clock-cells = <0>;
-				assigned-clock-rates = <199998001>;
-				assigned-clocks = <&zynqmp_clk 72>;
-				clock-output-names = "fabric_clk";
-				clocks = <&zynqmp_clk 72>;
-				compatible = "xlnx,fclk";
-			};
-			afi0: afi0 {
-				compatible = "xlnx,afi-fpga";
-				config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>, <12 0>, <13 0>, <14 0xa00>, <15 0x000>;
-				resets = <&zynqmp_reset 116>,
-						<&zynqmp_reset 117>,
-						<&zynqmp_reset 118>,
-						<&zynqmp_reset 119>;
-				reset-names = "pl0", "pl1", "pl2", "pl3";
-			};
-		};
-	};
-	fragment@2 {
-		target = <&amba>;
-		overlay2: __overlay__ {
-			#address-cells = <2>;
-			#size-cells = <2>;
+
+&fpga_full {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    firmware-name = "kr260-mv-camera.bit.bin";
+    resets = <&zynqmp_reset 116>,<&zynqmp_reset 117>;
+};
+
+&amba {
+    clocking0: clocking0 {
+        #clock-cells = <0>;
+        assigned-clock-rates = <99999001>;
+        assigned-clocks = <&zynqmp_clk 71>;
+        clock-output-names = "fabric_clk";
+        clocks = <&zynqmp_clk 71>;
+        compatible = "xlnx,fclk";
+    };
+    clocking1: clocking1 {
+        #clock-cells = <0>;
+        assigned-clock-rates = <199998001>;
+        assigned-clocks = <&zynqmp_clk 72>;
+        clock-output-names = "fabric_clk";
+        clocks = <&zynqmp_clk 72>;
+        compatible = "xlnx,fclk";
+    };
+    afi0: afi0 {
+        compatible = "xlnx,afi-fpga";
+        config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>, <12 0>, <13 0>, <14 0xA00>, <15 0x00>;
+        resets = <&zynqmp_reset 116>,
+                <&zynqmp_reset 117>,
+                <&zynqmp_reset 118>,
+                <&zynqmp_reset 119>;
+        reset-names = "pl0", "pl1", "pl2", "pl3";
+    };
+
 			CPU_axi_epc_0: axi_epc@a0000000 {
 				/* This is a place holder node for a custom IP, user may need to update the entries */
 				clock-names = "s_axi_aclk", "prh_clk";
@@ -290,14 +280,33 @@
 				reset-gpios = <&gpio 80 1>;
 				xlnx,dma-addr-width = <32>;
 				xlnx,dma-align = <32>;
-				xlnx,max-height = <2160>;
-				xlnx,max-width = <3840>;
+				xlnx,max-height = <1080>;
+				xlnx,max-width = <1920>;
 				xlnx,pixels-per-clock = <4>;
 				xlnx,s-axi-ctrl-addr-width = <0x7>;
 				xlnx,s-axi-ctrl-data-width = <0x20>;
-				xlnx,vid-formats = "rgb888", "bgr888", "uyvy", "yuyv";
+				xlnx,vid-formats = "bgr888", "y8";
 				xlnx,video-width = <8>;
 			};
+
+			axis_subset_conv: isp_subset_convertor {
+				compatible = "xlnx,axis-subsetconv-1.1";
+				ports {
+					port@0 {
+						reg = <0x0>;
+						subset_conv_in: endpoint {
+							remote-endpoint = <&sca_outxlnx_isp_v_proc_ss_0>;
+						};
+					};
+					port@1 {
+						reg = <0x1>;
+						subset_conv_out: endpoint {
+							remote-endpoint = <&xlnx_isp_v_frmbuf_wr_0xlnx_isp_v_proc_ss_0>;
+						};
+					};
+				};
+			};
+
 			xlnx_isp_v_proc_ss_0: v_proc_ss@b0000000 {
 				clock-names = "aclk_axis", "aclk_ctrl";
 				clocks = <&misc_clk_1>, <&misc_clk_1>;
@@ -309,9 +318,9 @@
 				xlnx,enable-csc = "false";
 				xlnx,h-scaler-phases = <64>;
 				xlnx,h-scaler-taps = <6>;
-				xlnx,max-height = <2160>;
+				xlnx,max-height = <2128>;
 				xlnx,max-num-phases = <64>;
-				xlnx,max-width = <3840>;
+				xlnx,max-width = <2472>;
 				xlnx,num-hori-taps = <6>;
 				xlnx,num-vert-taps = <6>;
 				xlnx,pix-per-clk = <4>;
@@ -331,7 +340,7 @@
 						xlnx,video-format = <3>;
 						xlnx,video-width = <8>;
 						sca_outxlnx_isp_v_proc_ss_0: endpoint {
-							remote-endpoint = <&xlnx_isp_v_frmbuf_wr_0xlnx_isp_v_proc_ss_0>;
+							remote-endpoint = <&subset_conv_in>;
 						};
 					};
 					scaler_port0xlnx_isp_v_proc_ss_0: port@0 {
@@ -433,11 +442,18 @@
 						direction = "input";
 						reg = <0>;
 						xlnx_isp_v_frmbuf_wr_0xlnx_isp_v_proc_ss_0: endpoint {
-							remote-endpoint = <&sca_outxlnx_isp_v_proc_ss_0>;
+							remote-endpoint = <&subset_conv_out>;
 						};
 					};
 				};
 			};
-		};
-	};
+
+		/* zocl */
+        zocl: zyxclmm_drm {
+            compatible = "xlnx,zocl";
+            status = "okay";
+            interrupt-parent = <&gic>;
+            interrupts = <0 104  4>, <0 105  4>, <0 106  4>, <0 107  4>,
+                        <0 108  4>, <0 109  4>, <0 110  4>, <0 111  4>;
+        };
 };
