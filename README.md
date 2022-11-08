@@ -9,7 +9,7 @@ For kr260 and kv260, each set of firmware files consists of:
 3. Device tree overlay source
 4. json file required by dfx-mgr
 
-For k26-dfx/2rp_design each set of firmware files consists of shell and reconfigurable module(RM) files.
+For k26-dfx/2rp each set of firmware files consists of shell and reconfigurable module(RM) files.
 **Flat or DFX shell design files**
 1. PL base shell bitstream
 2. Shell device tree overlay source
@@ -34,7 +34,7 @@ For each DFX slot, the following RM files are provided:
 1. tsn-rs485pmod
 2. mv-camera
 
-## Supported k26-dfx/2rp_design RM application firmware
+## Supported k26-dfx/2rp RM application firmware
 1. AES192
 2. AES128
 3. FFT
@@ -68,12 +68,12 @@ cd kria-apps-firmware
 sudo make -C boards/ install
 ```
 
-For k26-dfx/2rp_design DFX bitstreams only
+For k26-dfx/2rp DFX bitstreams only
 ```
 sudo apt install bootgen-xlnx
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware/
-sudo make -C k26-dfx/2rp_design install
+sudo make -C k26-dfx/2rp install
 ```
 
 ### Compilation on Linux Host machine
@@ -96,11 +96,11 @@ cd kria-apps-firmware
 sudo make -C boards/
 ```
 
-For k26-dfx/2rp_design DFX bitstreams only
+For k26-dfx/2rp DFX bitstreams only
 ```
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware
-sudo make -C k26-dfx/2rp_design
+sudo make -C k26-dfx/2rp
 ```
 
 
