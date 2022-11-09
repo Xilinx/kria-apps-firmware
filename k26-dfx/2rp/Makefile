@@ -43,7 +43,7 @@ clean:
 	rm -f $(BINS)
 	rm -f $(DTBOS)
 
-INSTALLDIR := $(DESTDIR)/lib/firmware/xilinx/k26_2rp
+INSTALLDIR := $(DESTDIR)/lib/firmware/xilinx/k26-dfx-2rp
 
 install: $(BINS) $(DTBOS) $(XCLBINS) $(JSONS)
 	for f in $^; do \

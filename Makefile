@@ -2,7 +2,7 @@
 BOARDS := boards/
 
 # Path to 2rp dfx designs
-K26_DFX := k26-dfx/2rp_design
+K26_DFX := k26-dfx/2rp
 
 default: all
 
