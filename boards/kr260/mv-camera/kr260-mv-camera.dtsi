@@ -2,7 +2,8 @@
 /*
  * dts file for Xilinx KR260 MV-Camera
  *
- * (C) Copyright 2021 - 2022, Xilinx, Inc.
+ * Copyright (C) 2021 - 2022, Xilinx, Inc.
+ * Copyright (C) 2022, Advanced Micro Devices, Inc.
  *
  */
 
@@ -17,31 +18,31 @@
 };
 
 &amba {
-    clocking0: clocking0 {
-        #clock-cells = <0>;
-        assigned-clock-rates = <99999001>;
-        assigned-clocks = <&zynqmp_clk 71>;
-        clock-output-names = "fabric_clk";
-        clocks = <&zynqmp_clk 71>;
-        compatible = "xlnx,fclk";
-    };
-    clocking1: clocking1 {
-        #clock-cells = <0>;
-        assigned-clock-rates = <199998001>;
-        assigned-clocks = <&zynqmp_clk 72>;
-        clock-output-names = "fabric_clk";
-        clocks = <&zynqmp_clk 72>;
-        compatible = "xlnx,fclk";
-    };
-    afi0: afi0 {
-        compatible = "xlnx,afi-fpga";
-        config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>, <12 0>, <13 0>, <14 0xA00>, <15 0x00>;
-        resets = <&zynqmp_reset 116>,
-                <&zynqmp_reset 117>,
-                <&zynqmp_reset 118>,
-                <&zynqmp_reset 119>;
-        reset-names = "pl0", "pl1", "pl2", "pl3";
-    };
+	clocking0: clocking0 {
+		#clock-cells = <0>;
+		assigned-clock-rates = <99999001>;
+		assigned-clocks = <&zynqmp_clk 71>;
+		clock-output-names = "fabric_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,fclk";
+	};
+	clocking1: clocking1 {
+		#clock-cells = <0>;
+		assigned-clock-rates = <199998001>;
+		assigned-clocks = <&zynqmp_clk 72>;
+		clock-output-names = "fabric_clk";
+		clocks = <&zynqmp_clk 72>;
+		compatible = "xlnx,fclk";
+	};
+	afi0: afi0 {
+		compatible = "xlnx,afi-fpga";
+		config-afi = <0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>, <12 0>, <13 0>, <14 0xA00>, <15 0x00>;
+		resets = <&zynqmp_reset 116>,
+				<&zynqmp_reset 117>,
+				<&zynqmp_reset 118>,
+				<&zynqmp_reset 119>;
+		reset-names = "pl0", "pl1", "pl2", "pl3";
+	};
 
 	CPU_axi_epc_0: axi_epc@a0000000 {
 		/* This is a place holder node for a custom IP, user may need to update the entries */
