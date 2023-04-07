@@ -1,0 +1,145 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * dts file for Xilinx KD240 motor drives
+ *
+ * (C) Copyright 2023, Advanced Micro Devices, Inc.
+ *
+ */
+
+/dts-v1/;
+/plugin/;
+
+&fpga_full {
+	#address-cells = <2>;
+	#size-cells = <2>;
+	firmware-name = "kd240_motor_ctrl_qei.bit.bin";
+	resets = <&zynqmp_reset 116>, <&zynqmp_reset 117>;
+};
+
+&amba {
+	afi0: afi0 {
+		compatible = "xlnx,afi-fpga";
+		config-afi = < 0 0>, <1 0>, <2 0>, <3 0>, <4 0>, <5 0>, <6 0>, <7 0>, <8 0>, <9 0>, <10 0>, <11 0>, <12 0>, <13 0>, <14 0x800>, <15 0>;
+	};
+
+	clocking0: clocking0 {
+		#clock-cells = <0>;
+		assigned-clock-rates = <99999001>;
+		assigned-clocks = <&zynqmp_clk 71>;
+		clock-output-names = "fabric_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,fclk";
+	};
+
+	clocking1: clocking1 {
+		#clock-cells = <0>;
+		assigned-clock-rates = <19999800>;
+		assigned-clocks = <&zynqmp_clk 72>;
+		clock-output-names = "fabric_clk";
+		clocks = <&zynqmp_clk 72>;
+		compatible = "xlnx,fclk";
+	};
+
+
+	hls_foc_periodic_0: hls_foc_periodic@a0000000 {
+		clock-names = "ap_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,hls-foc-periodic-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 93 4>;
+		reg = <0 0xa0000000 0 0x1000>;
+	};
+
+	hls_pwm_gen_0: hls_pwm_gen@a0040000 {
+		clock-names = "ap_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,hls-pwm-gen-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 95 4>;
+		reg = <0 0xa0040000 0 0x1000>;
+	};
+
+	hls_qei_axi_0: hls_qei_axi@a0030000 {
+		clock-names = "ap_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,hls-qei-axi-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 92 4>;
+		reg = <0 0xa0030000 0 0x1000>;
+	};
+
+	hls_svpwm_duty_0: hls_svpwm_duty@a0050000 {
+		clock-names = "ap_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,hls-svpwm-duty-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 94 4>;
+		reg = <0 0xa0050000 0 0x1000>;
+	};
+
+	motor_control_0: motor_control@a0020000 {
+		clock-names = "s_axi_cntrl_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,motor-control-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 90 4>;
+		reg = <0 0xa0020000 0 0x100>;
+	};
+
+	ADC_adc_hub_0: adc_hub@a0010000 {
+		compatible = "xlnx,adc-hub-1.0";
+		interrupt-names = "adc_hub-irq";
+		interrupt-parent = <&gic>;
+		interrupts = <0 104 4>;
+		xlnx,numchannels = /bits/8 <8>;
+		reg = <0 0xa0010000 0 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		channel@0 {
+			reg = <0>;
+			xlnx,type = "voltage";
+			xlnx,realbits = <12>;
+		};
+		channel@1 {
+			reg = <1>;
+			xlnx,type = "current";
+			xlnx,realbits = <12>;
+		};
+		channel@2 {
+			reg = <2>;
+			xlnx,type = "voltage";
+			xlnx,realbits = <12>;
+		};
+		channel@3 {
+			reg = <3>;
+			xlnx,type = "current";
+			xlnx,realbits = <12>;
+		};
+		channel@4 {
+			reg = <4>;
+			xlnx,type = "voltage";
+			xlnx,realbits = <12>;
+		};
+		channel@5 {
+			reg = <5>;
+			xlnx,type = "current";
+			xlnx,realbits = <12>;
+		};
+		channel@6 {
+			reg = <6>;
+			xlnx,type = "voltage";
+			xlnx,realbits = <12>;
+		};
+		channel@7 {
+			reg = <7>;
+			xlnx,type = "current";
+			xlnx,realbits = <12>;
+		};
+	};
+
+};
