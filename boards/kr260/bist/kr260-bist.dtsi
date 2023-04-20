@@ -67,6 +67,11 @@
 		clock-frequency = <99999000>;
 		compatible = "fixed-clock";
 	};
+	misc_clk_6: misc_clk_6 {
+		#clock-cells = <0>;
+		clock-frequency = <156250000>;
+		compatible = "fixed-clock";
+	};
 	axi_gpio_0: gpio@a0000000 {
 		#gpio-cells = <2>;
 		clocks = <&misc_clk_5>;
@@ -85,6 +90,35 @@
 		xlnx,is-dual = <0x1>;
 		xlnx,tri-default = <0xffffffff>;
 		xlnx,tri-default-2 = <0xffffffff>;
+	};
+	ETH10G_axi_eth10G_DMA: dma@a0160000 {
+		#dma-cells = <1>;
+		clock-names = "s_axi_lite_aclk", "m_axi_sg_aclk", "m_axi_mm2s_aclk", "m_axi_s2mm_aclk";
+		clocks = <&misc_clk_5>, <&zynqmp_clk 71>, <&misc_clk_6>, <&misc_clk_6>;
+		compatible = "xlnx,eth-dma";
+		interrupt-names = "mm2s_introut", "s2mm_introut";
+		interrupt-parent = <&gic>;
+		interrupts = <0 89 4 0 90 4>;
+		reg = <0x0 0xa0160000 0x0 0x10000>;
+		xlnx,addrwidth = /bits/ 8 <0x20>;
+		xlnx,num-queues = /bits/ 16 <0x1>;
+	};
+	ETH10G_xxv_ethernet_1: ethernet@a0130000 {
+		axistream-connected = <&ETH10G_axi_eth10G_DMA>;
+		clock-names = "rx_core_clk", "dclk", "s_axi_aclk", "s_axi_lite_aclk", "m_axi_sg_aclk", "m_axi_mm2s_aclk", "m_axi_s2mm_aclk";
+		clocks = <&misc_clk_6>,  <&misc_clk_5>,  <&misc_clk_5>, <&misc_clk_5>, <&zynqmp_clk 71>, <&misc_clk_6>, <&misc_clk_6>;
+		compatible = "xlnx,xxv-ethernet-4.1", "xlnx,xxv-ethernet-1.0";
+		device_type = "network";
+		interrupt-names = "mm2s_introut", "s2mm_introut";
+		interrupt-parent = <&gic>;
+		interrupts = <0 89 4 0 90 4>;
+		local-mac-address = [00 0a 35 00 00 00];
+		phy-mode = "base-r";
+		reg = <0x0 0xa0130000 0x0 0x10000>;
+		xlnx,channel-ids = "1";
+		xlnx,include-dre ;
+		xlnx,num-queues = /bits/ 16 <0x1>;
+		xlnx,rxmem = <0x10000>;
 	};
 	GEM2_axi_dma_gem2: dma@a0140000 {
 		#dma-cells = <1>;
