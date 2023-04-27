@@ -72,6 +72,11 @@
 		clock-frequency = <156250000>;
 		compatible = "fixed-clock";
 	};
+	misc_clk_7: misc_clk_7 {
+		#clock-cells = <0>;
+		clock-frequency = <237600000>;
+		compatible = "fixed-clock";
+	};
 	axi_gpio_0: gpio@a0000000 {
 		#gpio-cells = <2>;
 		clocks = <&misc_clk_5>;
@@ -206,5 +211,81 @@
 			};
 		};
 	};
+	IS_CONTROL_sensor_iic: i2c@a0010000 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clock-names = "s_axi_aclk";
+		clocks = <&misc_clk_5>;
+		compatible = "xlnx,axi-iic-2.1", "xlnx,xps-iic-2.00.a";
+		interrupt-names = "iic2intc_irpt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 91 4>;
+		reg = <0x0 0xa0010000 0x0 0x10000>;
+		imx547: sensor@1a {
+			compatible = "framos,imx547";
+			reg = <0x1a>;
+			reset-gpios = <&gpio 82 0>, <&gpio 83 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				sensor_out: endpoint {
+					remote-endpoint = <&subset_conv_in>;
+				};
+			};
+		};
+	};
+	xlnx_isp_v_frmbuf_wr_0: v_frmbuf_wr@b0050000 {
+		#dma-cells = <1>;
+		clock-names = "ap_clk";
+		clocks = <&misc_clk_7>;
+		compatible = "xlnx,v-frmbuf-wr-2.3", "xlnx,axi-frmbuf-wr-v2.2";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 93 4>;
+		reg = <0x0 0xb0050000 0x0 0x10000>;
+		reset-gpios = <&gpio 80 1>;
+		xlnx,dma-addr-width = <32>;
+		xlnx,dma-align = <32>;
+		xlnx,max-height = <1080>;
+		xlnx,max-width = <1920>;
+		xlnx,pixels-per-clock = <4>;
+		xlnx,s-axi-ctrl-addr-width = <0x7>;
+		xlnx,s-axi-ctrl-data-width = <0x20>;
+		xlnx,vid-formats = "y8";
+		xlnx,video-width = <8>;
+	};
+	axis_subset_conv: isp_subset_convertor {
+		compatible = "xlnx,axis-subsetconv-1.1";
+		ports {
+			port@0 {
+				reg = <0x0>;
+				subset_conv_in: endpoint {
+					remote-endpoint = <&sensor_out>;
+				};
+			};
+			port@1 {
+				reg = <0x1>;
+				subset_conv_out: endpoint {
+					remote-endpoint = <&fbwr_in>;
+				};
+			};
+		};
+	};
+	vcap_xlnx_isp_v_proc_ss_0 {
+		compatible = "xlnx,video";
+		dma-names = "port0";
+		dmas = <&xlnx_isp_v_frmbuf_wr_0 0>;
+		vcap_portsxlnx_isp_v_proc_ss_0: ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			vcap_portxlnx_isp_v_proc_ss_0: port@0 {
+				direction = "input";
+				reg = <0>;
+				fbwr_in: endpoint {
+					remote-endpoint = <&subset_conv_out>;
+				};
+			};
+		};
+	};
 };
-
