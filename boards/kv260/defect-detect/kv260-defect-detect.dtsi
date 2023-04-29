@@ -160,7 +160,6 @@
 		xlnx,axis-tdata-width = <32>;
 		xlnx,max-lanes = <1>;
 		xlnx,en-active-lanes;
-		xlnx,vc = <4>;
 		xlnx,ppc = <2>;
 		xlnx,vfb;
 
@@ -170,8 +169,6 @@
 
 			port@1 {
 				reg = <0x1>;
-				xlnx,video-format = <0>;
-				xlnx,video-width = <0x8>;
 
 				isp_csiss_out: endpoint {
 					remote-endpoint = <&subset_conv_in>;
@@ -179,8 +176,6 @@
 			};
 			port@0 {
 				reg = <0x0>;
-				xlnx,video-format = <0x0>;
-				xlnx,video-width = <0x8>;
 
 				isp_csiss_in: endpoint {
 					data-lanes = <1>;
