@@ -84,7 +84,8 @@
 	motor_control_0: motor_control@a0020000 {
 		clock-names = "s_axi_cntrl_clk";
 		clocks = <&zynqmp_clk 71>;
-		compatible = "xlnx,motor-control-1.0";
+		compatible = "generic-uio";
+		linux,uio-name = "motor_control";
 		interrupt-names = "interrupt";
 		interrupt-parent = <&gic>;
 		interrupts = <0 90 4>;
