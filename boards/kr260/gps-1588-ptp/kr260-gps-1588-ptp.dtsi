@@ -49,7 +49,7 @@
 	axi_uartlite_0: serial@80000000 {
 		clock-names = "s_axi_aclk";
 		clocks = <&misc_clk_0>;
-		compatible = "xlnx,axi-uartlite-rs485";
+		compatible = "xlnx,axi-uartlite-2.0", "xlnx,xps-uartlite-1.00.a";
 		current-speed = <9600>;
 		device_type = "serial";
 		interrupt-names = "interrupt";
