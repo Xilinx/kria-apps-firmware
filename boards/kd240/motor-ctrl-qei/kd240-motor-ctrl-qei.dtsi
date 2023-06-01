@@ -104,42 +104,40 @@
 		channel@0 {
 			reg = <0>;
 			xlnx,type = "voltage";
-			xlnx,realbits = <12>;
+			xlnx,bipolar;
 		};
 		channel@1 {
 			reg = <1>;
 			xlnx,type = "current";
-			xlnx,realbits = <12>;
+			xlnx,bipolar;
 		};
 		channel@2 {
 			reg = <2>;
 			xlnx,type = "voltage";
-			xlnx,realbits = <12>;
+			xlnx,bipolar;
 		};
 		channel@3 {
 			reg = <3>;
 			xlnx,type = "current";
-			xlnx,realbits = <12>;
+			xlnx,bipolar;
 		};
 		channel@4 {
 			reg = <4>;
 			xlnx,type = "voltage";
-			xlnx,realbits = <12>;
+			xlnx,bipolar;
 		};
 		channel@5 {
 			reg = <5>;
 			xlnx,type = "current";
-			xlnx,realbits = <12>;
+			xlnx,bipolar;
 		};
 		channel@6 {
 			reg = <6>;
 			xlnx,type = "voltage";
-			xlnx,realbits = <12>;
 		};
 		channel@7 {
 			reg = <7>;
 			xlnx,type = "current";
-			xlnx,realbits = <12>;
 		};
 	};
 
