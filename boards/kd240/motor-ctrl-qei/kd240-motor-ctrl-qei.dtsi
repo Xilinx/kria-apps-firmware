@@ -96,7 +96,7 @@
 		compatible = "xlnx,adc-hub-1.0";
 		interrupt-names = "adc_hub-irq";
 		interrupt-parent = <&gic>;
-		interrupts = <0 104 4>;
+		interrupts = <0 89 4>;
 		xlnx,numchannels = /bits/8 <8>;
 		reg = <0 0xa0010000 0 0x1000>;
 		#address-cells = <1>;
