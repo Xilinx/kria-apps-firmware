@@ -3,7 +3,7 @@
  * dts file for Xilinx KR260 MV-Camera
  *
  * Copyright (C) 2021 - 2022, Xilinx, Inc.
- * Copyright (C) 2022, Advanced Micro Devices, Inc.
+ * Copyright (C) 2022 - 2023, Advanced Micro Devices, Inc.
  *
  */
 
@@ -234,6 +234,7 @@
 		clock-frequency = <100000000>;
 		compatible = "fixed-clock";
 	};
+
 	xlnx_isp_v_frmbuf_wr_0: v_frmbuf_wr@b0050000 {
 		#dma-cells = <1>;
 		clock-names = "ap_clk";
@@ -251,11 +252,47 @@
 		xlnx,pixels-per-clock = <4>;
 		xlnx,s-axi-ctrl-addr-width = <0x7>;
 		xlnx,s-axi-ctrl-data-width = <0x20>;
-		xlnx,vid-formats = "bgr888", "y8";
+		xlnx,vid-formats = "y8";
 		xlnx,video-width = <8>;
 	};
 
-	axis_subset_conv: isp_subset_convertor {
+	xlnx_isp_v_demosaic_0: ISPPipeline_accel@b0000000 {
+		compatible = "xlnx,isppipeline-mono-1.0";
+		reg = <0x0 0xb0000000 0x0 0x10000>;
+		clocks = <&misc_clk_1>;
+		reset-gpios = <&gpio 81 1>;
+		xlnx,max-width = /bits/ 16 <2472>;
+		xlnx,max-height = /bits/ 16 <2064>;
+		xlnx,rgain = /bits/ 16 <128>;
+		xlnx,bgain = /bits/ 16 <3>;
+		xlnx,pawb = /bits/ 16 <4>;
+		xlnx,mode-reg = /bits/ 16 <4>;
+
+		demosaic_portsxlnx_isp_v_demosaic_0: ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			demosaic_port0xlnx_isp_v_demosaic_0: port@0 {
+				reg = <0>;
+				xlnx,video-width = <8>;
+
+				demosaic_in: endpoint {
+					remote-endpoint = <&subset_conv_out>;
+				};
+			};
+
+			demosaic_port1xlnx_isp_v_demosaic_0: port@1 {
+				reg = <1>;
+				xlnx,video-width = <8>;
+
+				demosaic_out: endpoint {
+					remote-endpoint = <&fbwr_in>;
+				};
+			};
+		};
+	};
+
+	axis_subset_conv_0: isp_subset_convertor_0 {
 		compatible = "xlnx,axis-subsetconv-1.1";
 		ports {
 			port@0 {
@@ -267,7 +304,7 @@
 			port@1 {
 				reg = <0x1>;
 				subset_conv_out: endpoint {
-					remote-endpoint = <&fbwr_in>;
+					remote-endpoint = <&demosaic_in>;
 				};
 			};
 		};
@@ -361,7 +398,7 @@
 				direction = "input";
 				reg = <0>;
 				fbwr_in: endpoint {
-					remote-endpoint = <&subset_conv_out>;
+					remote-endpoint = <&demosaic_out>;
 				};
 			};
 		};
