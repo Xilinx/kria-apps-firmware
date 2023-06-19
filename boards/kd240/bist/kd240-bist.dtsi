@@ -224,15 +224,6 @@
 				adi,rx-internal-delay-ps = <2000>;
 				adi,tx-internal-delay-ps = <2000>;
 				adi,fifo-depth-bits = <8>;
-				/** TODO: Revisit & Verify the correct reset gpio id.
-					  Meanwhile, it should work fine without it
-					  for at least one iteration
-
-
-				reset-gpios = <&gpio 78 GPIO_ACTIVE_LOW>;
-				reset-assert-us = <10>;
-				reset-deassert-us = <5000>;
-				**/
 			};
 		};
 	};
@@ -299,15 +290,6 @@
 				adi,rx-internal-delay-ps = <2000>;
 				adi,tx-internal-delay-ps = <2000>;
 				adi,fifo-depth-bits = <8>;
-				/** TODO: Revisit & Verify the correct reset gpio id.
-					  Meanwhile, it should work fine without it
-					  for at least one iteration
-
-
-				reset-gpios = <&gpio 79 GPIO_ACTIVE_LOW>;
-				reset-assert-us = <10>;
-				reset-deassert-us = <5000>;
-				**/
 			};
 		};
 	};
