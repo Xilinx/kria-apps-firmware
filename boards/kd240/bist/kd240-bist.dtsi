@@ -33,7 +33,7 @@
 
 	clocking1: clocking1 {
 		#clock-cells = <0>;
-		assigned-clock-rates = <19999800>;
+		assigned-clock-rates = <99999001>;
 		assigned-clocks = <&zynqmp_clk 72>;
 		clock-output-names = "fabric_clk";
 		clocks = <&zynqmp_clk 72>;
@@ -53,37 +53,67 @@
 		compatible = "fixed-clock";
 	};
 
+	hls_foc_periodic_0: hls_foc_periodic@a0000000 {
+		clock-names = "ap_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,hls-foc-periodic-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 93 4>;
+		reg = <0 0xa0000000 0 0x1000>;
+	};
+
 	hls_pwm_gen_0: hls_pwm_gen@a0040000 {
 		clock-names = "ap_clk";
 		clocks = <&zynqmp_clk 71>;
 		compatible = "xlnx,hls-pwm-gen-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 95 4>;
 		reg = <0 0xa0040000 0 0x1000>;
 	};
 
-	hls_qei_axi_0: hls_qei_axi@a0000000 {
+	hls_qei_axi_0: hls_qei_axi@a0030000 {
 		clock-names = "ap_clk";
 		clocks = <&zynqmp_clk 71>;
 		compatible = "xlnx,hls-qei-axi-1.0";
-		reg = <0 0xa0000000 0 0x1000>;
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 92 4>;
+		reg = <0 0xa0030000 0 0x1000>;
 	};
 
 	hls_svpwm_duty_0: hls_svpwm_duty@a0050000 {
 		clock-names = "ap_clk";
 		clocks = <&zynqmp_clk 71>;
 		compatible = "xlnx,hls-svpwm-duty-1.0";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 94 4>;
 		reg = <0 0xa0050000 0 0x1000>;
 	};
 
-	axi_gpio_0: gpio@a0020000 {
+	motor_control_0: motor_control@a0020000 {
+		clock-names = "s_axi_cntrl_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "generic-uio";
+		linux,uio-name = "motor_control";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 90 4>;
+		reg = <0 0xa0020000 0 0x100>;
+	};
+
+	axi_gpio_0: gpio@a0070000 {
 		#gpio-cells = <2>;
-		compatible = "xlnx,xps-gpio-1.00.a";
+		compatible = "xlnx,axi-gpio-2.0","xlnx,xps-gpio-1.00.a";
 		clocks = <&zynqmp_clk 71>;
 		gpio-controller ;
-		reg = < 0x0 0xa0020000 0x0 0x10000 >;
+		reg = <0x0 0xa0070000 0x0 0x10000>;
 		xlnx,all-inputs = <0x0>;
 		xlnx,all-inputs-2 = <0x0>;
 		xlnx,all-outputs = <0x0>;
-		xlnx,all-outputs-2 = <0x1>;
+		xlnx,all-outputs-2 = <0x0>;
 		xlnx,dout-default = <0x00000000>;
 		xlnx,dout-default-2 = <0x00000000>;
 		xlnx,gpio-width = <0x8>;
@@ -98,7 +128,7 @@
 		compatible = "xlnx,adc-hub-1.0";
 		interrupt-names = "adc_hub-irq";
 		interrupt-parent = <&gic>;
-		interrupts = <0 104 4>;
+		interrupts = <0 89 4>;
 		xlnx,numchannels = /bits/8 <8>;
 		reg = <0 0xa0010000 0 0x1000>;
 		#address-cells = <1>;
@@ -143,7 +173,7 @@
 		};
 	};
 
-	axi_quad_spi_0: axi_quad_spi@a0030000 {
+	axi_quad_spi_0: axi_quad_spi@a0060000 {
 		bits-per-word = <8>;
 		clock-names = "ext_spi_clk", "s_axi_aclk";
 		clocks = <&zynqmp_clk 71>, <&zynqmp_clk 71>;
@@ -151,9 +181,9 @@
 		fifo-size = <16>;
 		interrupt-names = "ip2intc_irpt";
 		interrupt-parent = <&gic>;
-		interrupts = <0 105 1>;
+		interrupts = <0 106 1>;
 		num-cs = <0x1>;
-		reg = <0x0 0xa0030000 0x0 0x10000>;
+		reg = <0x0 0xa0060000 0x0 0x10000>;
 		xlnx,num-ss-bits = <0x1>;
 		xlnx,spi-mode = <0>;
 		spidev@0 {
