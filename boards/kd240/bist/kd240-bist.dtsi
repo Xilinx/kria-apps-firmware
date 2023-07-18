@@ -53,6 +53,13 @@
 		compatible = "fixed-clock";
 	};
 
+	clk20m: clk20m {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <20000000>;
+                clock-output-names = "clk20m";
+	};
+
 	hls_foc_periodic_0: hls_foc_periodic@a0000000 {
 		clock-names = "ap_clk";
 		clocks = <&zynqmp_clk 71>;
@@ -190,6 +197,30 @@
 			compatible = "rohm,dh2228fv"; /*spidev alternative*/
 			reg = <0>;
 			spi-max-frequency = <1000000>;
+		};
+	};
+
+	axi_quad_spi_CAN: axi_quad_spi@a0080000 {
+		bits-per-word = <8>;
+		clock-names = "ext_spi_clk", "s_axi_aclk";
+		clocks = <&misc_clk_0>, <&misc_clk_0>;
+		compatible = "xlnx,axi-quad-spi-3.2", "xlnx,xps-spi-2.00.a";
+		fifo-size = <16>;
+		interrupt-names = "ip2intc_irpt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 111 1>;
+		num-cs = <0x1>;
+		reg = <0x0 0xa0080000 0x0 0x10000>;
+		xlnx,num-ss-bits = <0x1>;
+		xlnx,spi-mode = <0>;
+    		can@0 {
+			compatible = "microchip,mcp25625";
+			reg = <0>;
+			clocks = <&clk20m>;
+			interrupt-names = "can_int";
+                       	interrupt-parent = <&gic>; 
+			interrupts = <0 110 4>;
+			spi-max-frequency = <10000000>;
 		};
 	};
 
