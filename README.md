@@ -3,7 +3,7 @@
 This repository contains application-specific PL firmware files for the Kria
 Starter Kits.
 
-For kr260 and kv260, each set of firmware files consists of:
+For kr260, kv260, and kd240 each set of firmware files consists of:
 1. PL bitstream binary
 2. Xclbin binary (optional)
 3. Device tree overlay source
@@ -29,10 +29,18 @@ For each DFX slot, the following RM files are provided:
 3. defect-detect
 4. nlp-smartvision
 5. benchmark-b4096
+6. bist
 
 ## Supported KR260 application firmware
 1. tsn-rs485pmod
-2. mv-camera
+2. mv-camera-mono
+3. mv-camera-color
+4. gps-1588-ptp
+5. bist
+
+## Supported KD240 application firmware
+1. motor-ctrl-qei
+2. bist
 
 ## Supported k26-dfx/2rp RM application firmware
 1. AES192
@@ -60,7 +68,7 @@ cd kria-apps-firmware/
 sudo make install
 ```
 
-For kr-260 and kv-260 flat bitstreams only
+For kr260, kv260, and kd240 flat bitstreams only
 ```
 sudo apt install bootgen-xlnx
 git clone https://github.com/Xilinx/kria-apps-firmware.git
@@ -89,7 +97,7 @@ cd kria-apps-firmware
 sudo make
 ```
 
-For kr-260 and kv-260 flat bitstreams only
+For kr260, kv260, and kd240 flat bitstreams only
 ```
 git clone https://github.com/Xilinx/kria-apps-firmware.git
 cd kria-apps-firmware
