@@ -1,5 +1,5 @@
-# subdirectories of kr260 and kv260 under source directory - one per app
-APPS := $(wildcard kr260/*/ kv260/*/ kd240/*/ kv240/*/)
+# subdirectories of kr260, kv260 and kd240 under source directory - one per app
+APPS := $(wildcard kr260/*/ kv260/*/ kd240/*/)
 
 # *.bit, *.dtsi, *.xclbin and shell.json files under these specific directories
 BITS := $(wildcard $(patsubst %,%*.bit,$(APPS)))
