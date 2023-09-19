@@ -170,7 +170,7 @@
 			port@0 {
 				reg = <0>;
 				sensor_out: endpoint {
-					remote-endpoint = <&subset_conv_in>;
+					remote-endpoint = <&demosaic0_input_port0>;
 				};
 			};
 		};
@@ -234,6 +234,42 @@
 		clock-frequency = <100000000>;
 		compatible = "fixed-clock";
 	};
+	xlnx_isp_v_demosaic_0: v_demosaic@b0040000 {
+		clock-names = "ap_clk";
+		clocks = <&misc_clk_1>;
+		compatible = "xlnx,v-demosaic-1.1", "xlnx,v-demosaic";
+		interrupt-names = "interrupt";
+		interrupt-parent = <&gic>;
+		interrupts = <0 92 4>;
+		reg = <0x0 0xb0040000 0x0 0x10000>;
+		reset-gpios = <&gpio 78 1>;
+		xlnx,max-height = <2160>;
+		xlnx,max-width = <3840>;
+		xlnx,s-axi-ctrl-addr-width = <0x6>;
+		xlnx,s-axi-ctrl-data-width = <0x20>;
+		demosaic_portsxlnx_isp_v_demosaic_0: ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			demosaic_port1xlnx_isp_v_demosaic_0: port@1 {
+				/* For cfa-pattern=rggb user needs to fill as per BAYER format */
+				reg = <1>;
+				xlnx,cfa-pattern = "rggb";
+				xlnx,video-width = <8>;
+				demo_outxlnx_isp_v_demosaic_0: endpoint {
+					remote-endpoint = <&xlnx_isp_v_proc_ss_0xlnx_isp_v_demosaic_0>;
+				};
+			};
+			demosaic_port0xlnx_isp_v_demosaic_0: port@0 {
+				/* For cfa-pattern=rggb user needs to fill as per BAYER format */
+				reg = <0>;
+				xlnx,cfa-pattern = "rggb";
+				xlnx,video-width = <8>;
+				demosaic0_input_port0: endpoint {
+					remote-endpoint = <&sensor_out>;
+				};
+			};
+		};
+	};
 	xlnx_isp_v_frmbuf_wr_0: v_frmbuf_wr@b0050000 {
 		#dma-cells = <1>;
 		clock-names = "ap_clk";
@@ -251,7 +287,7 @@
 		xlnx,pixels-per-clock = <4>;
 		xlnx,s-axi-ctrl-addr-width = <0x7>;
 		xlnx,s-axi-ctrl-data-width = <0x20>;
-		xlnx,vid-formats = "y8";
+		xlnx,vid-formats = "bgr888", "y8";
 		xlnx,video-width = <8>;
 	};
 
@@ -261,18 +297,65 @@
 			port@0 {
 				reg = <0x0>;
 				subset_conv_in: endpoint {
-					remote-endpoint = <&sensor_out>;
+					remote-endpoint = <&sca_outxlnx_isp_v_proc_ss_0>;
 				};
 			};
 			port@1 {
 				reg = <0x1>;
 				subset_conv_out: endpoint {
-					remote-endpoint = <&fbwr_in>;
+					remote-endpoint = <&xlnx_isp_v_frmbuf_wr_0xlnx_isp_v_proc_ss_0>;
 				};
 			};
 		};
 	};
 
+	xlnx_isp_v_proc_ss_0: v_proc_ss@b0000000 {
+		clock-names = "aclk_axis", "aclk_ctrl";
+		clocks = <&misc_clk_1>, <&misc_clk_1>;
+		compatible = "xlnx,v-vpss-scaler-2.2";
+		reg = <0x0 0xb0000000 0x0 0x40000>;
+		reset-gpios = <&gpio 79 1>;
+		xlnx,colorspace-support = <0>;
+		xlnx,csc-enable-window = "true";
+		xlnx,enable-csc = "false";
+		xlnx,h-scaler-phases = <64>;
+		xlnx,h-scaler-taps = <6>;
+		xlnx,max-height = <2128>;
+		xlnx,max-num-phases = <64>;
+		xlnx,max-width = <2472>;
+		xlnx,num-hori-taps = <6>;
+		xlnx,num-vert-taps = <6>;
+		xlnx,pix-per-clk = <4>;
+		xlnx,samples-per-clk = <4>;
+		xlnx,scaler-algorithm = <2>;
+		xlnx,topology = <0>;
+		xlnx,use-uram = <0>;
+		xlnx,v-scaler-phases = <64>;
+		xlnx,v-scaler-taps = <6>;
+		xlnx,video-width = <8>;
+		scaler_portsxlnx_isp_v_proc_ss_0: ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			scaler_port1xlnx_isp_v_proc_ss_0: port@1 {
+				/* For xlnx,video-format user needs to fill as per their requirement */
+				reg = <1>;
+				xlnx,video-format = <3>;
+				xlnx,video-width = <8>;
+				sca_outxlnx_isp_v_proc_ss_0: endpoint {
+					remote-endpoint = <&subset_conv_in>;
+				};
+			};
+			scaler_port0xlnx_isp_v_proc_ss_0: port@0 {
+				/* For xlnx,video-format user needs to fill as per their requirement */
+				reg = <0>;
+				xlnx,video-format = <3>;
+				xlnx,video-width = <8>;
+				xlnx_isp_v_proc_ss_0xlnx_isp_v_demosaic_0: endpoint {
+					remote-endpoint = <&demo_outxlnx_isp_v_demosaic_0>;
+				};
+			};
+		};
+	};
 	xxv_ethernet_0: ethernet@a0070000 {
 		clock-frequency = <100000000>;
 		clock-names = "rx_core_clk_0", "dclk", "qpll0clk_in", "qpll0refclk_in", "qpll1clk_in", "qpll1refclk_in", "s_axi_aclk_0";
@@ -360,7 +443,7 @@
 			vcap_portxlnx_isp_v_proc_ss_0: port@0 {
 				direction = "input";
 				reg = <0>;
-				fbwr_in: endpoint {
+				xlnx_isp_v_frmbuf_wr_0xlnx_isp_v_proc_ss_0: endpoint {
 					remote-endpoint = <&subset_conv_out>;
 				};
 			};
