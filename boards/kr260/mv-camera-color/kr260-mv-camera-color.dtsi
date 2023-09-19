@@ -261,7 +261,7 @@
 		reg = <0x0 0xb0000000 0x0 0x10000>;
 		clocks = <&misc_clk_1>;
 		reset-gpios = <&gpio 81 1>;
-		xlnx,max-width  /bits/ 16 <2472>;
+		xlnx,max-width = /bits/ 16 <2472>;
 		xlnx,max-height = /bits/ 16 <2064>;
 		xlnx,rgain = /bits/ 16 <128>;
 		xlnx,bgain = /bits/ 16 <3>;
