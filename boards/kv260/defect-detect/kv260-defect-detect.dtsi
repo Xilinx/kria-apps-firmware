@@ -18,7 +18,7 @@
 
 &zynqmp_dpsub {
     status = "okay";
-    clocks = <&dp_aclk>, <&zynqmp_clk 17>, <&zynqmp_clk 16>, <&dp_video_clk 0>;
+    clocks = <&zynqmp_clk 28>, <&zynqmp_clk 17>, <&zynqmp_clk 16>, <&dp_video_clk 0>;
     clock-names = "dp_apb_clk", "dp_aud_clk",
                     "dp_vtc_pixel_clk_in",
                     "dp_live_video_in_clk";
